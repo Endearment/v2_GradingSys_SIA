@@ -13,17 +13,20 @@ namespace GradingSys_SIA
 
         private string fullName;
         private Image profileImage;
-        
-        public sideBarPanel(string fullName, Image profileImage)
+        private string studentId;
+
+        public sideBarPanel(string fullName, Image profileImage, string studentId)
         {
             InitializeComponent();
             this.fullName = fullName;
             this.profileImage = profileImage;
+            this.studentId = studentId;
             panel2.MouseDown += new MouseEventHandler(panel2_MouseDown);
             panel2.MouseMove += new MouseEventHandler(panel2_MouseMove);
             panel2.MouseUp += new MouseEventHandler(panel2_MouseUp);
 
             loadform(new landingPage(fullName, profileImage));
+            this.studentId = studentId;
         }
 
         private void panel2_MouseDown(object? sender, MouseEventArgs e)
@@ -91,7 +94,7 @@ namespace GradingSys_SIA
 
         private void label1_Click(object sender, EventArgs e)
         {
-            loadform(new aptitudePage());
+            loadform(new aptitudePage(studentId));
         }
 
         private void label2_Click(object sender, EventArgs e)

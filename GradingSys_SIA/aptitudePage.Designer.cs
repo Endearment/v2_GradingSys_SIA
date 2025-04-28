@@ -42,13 +42,13 @@
             label5 = new Label();
             label7 = new Label();
             panel4 = new Panel();
+            circularProgressBar2 = new CircularProgressBar();
             label15 = new Label();
             label35 = new Label();
             label14 = new Label();
             label9 = new Label();
             label10 = new Label();
             label8 = new Label();
-            circularProgressBar2 = new CircularProgressBar();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -195,6 +195,28 @@
             panel4.Size = new Size(590, 275);
             panel4.TabIndex = 7;
             // 
+            // circularProgressBar2
+            // 
+            circularProgressBar2.BackColor = Color.White;
+            circularProgressBar2.BarColor1 = Color.DarkBlue;
+            circularProgressBar2.BarColor2 = Color.AliceBlue;
+            circularProgressBar2.BarWidth = 14F;
+            circularProgressBar2.Font = new Font("Segoe UI", 15F);
+            circularProgressBar2.ForeColor = Color.Indigo;
+            circularProgressBar2.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            circularProgressBar2.LineColor = Color.Indigo;
+            circularProgressBar2.LineWidth = 1;
+            circularProgressBar2.Location = new Point(326, 16);
+            circularProgressBar2.Maximum = 100L;
+            circularProgressBar2.MinimumSize = new Size(100, 100);
+            circularProgressBar2.Name = "circularProgressBar2";
+            circularProgressBar2.ProgressShape = CircularProgressBar._ProgressShape.Flat;
+            circularProgressBar2.Size = new Size(236, 236);
+            circularProgressBar2.TabIndex = 45;
+            circularProgressBar2.Text = "57";
+            circularProgressBar2.TextMode = CircularProgressBar._TextMode.Percentage;
+            circularProgressBar2.Value = 57L;
+            // 
             // label15
             // 
             label15.AutoSize = true;
@@ -214,6 +236,7 @@
             label35.Size = new Size(52, 25);
             label35.TabIndex = 43;
             label35.Text = "        ";
+            label35.Click += label35_Click;
             // 
             // label14
             // 
@@ -255,28 +278,6 @@
             label8.TabIndex = 6;
             label8.Text = "Total Possible:";
             // 
-            // circularProgressBar2
-            // 
-            circularProgressBar2.BackColor = Color.White;
-            circularProgressBar2.BarColor1 = Color.DarkBlue;
-            circularProgressBar2.BarColor2 = Color.AliceBlue;
-            circularProgressBar2.BarWidth = 14F;
-            circularProgressBar2.Font = new Font("Segoe UI", 15F);
-            circularProgressBar2.ForeColor = Color.Indigo;
-            circularProgressBar2.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            circularProgressBar2.LineColor = Color.Indigo;
-            circularProgressBar2.LineWidth = 1;
-            circularProgressBar2.Location = new Point(326, 16);
-            circularProgressBar2.Maximum = 100L;
-            circularProgressBar2.MinimumSize = new Size(100, 100);
-            circularProgressBar2.Name = "circularProgressBar2";
-            circularProgressBar2.ProgressShape = CircularProgressBar._ProgressShape.Flat;
-            circularProgressBar2.Size = new Size(236, 236);
-            circularProgressBar2.TabIndex = 45;
-            circularProgressBar2.Text = "57";
-            circularProgressBar2.TextMode = CircularProgressBar._TextMode.Percentage;
-            circularProgressBar2.Value = 57L;
-            // 
             // aptitudePage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -290,6 +291,7 @@
             Name = "aptitudePage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "aptitude";
+            Load += aptitudePage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
