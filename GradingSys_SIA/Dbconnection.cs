@@ -11,15 +11,20 @@ namespace GradingSys_SIA
     {
         private readonly string connectionString;
         private MySqlConnection connection;
+        private bool _disposed = false;
 
-        public DbConnection()
+        public DbConnection(string databaseName = "cis_db")
         {
-            connectionString = "server=localhost;user id=root;password=;database=cis_db;";
+            connectionString = $"server=localhost;user id=root;password=;database={databaseName};";
             connection = new MySqlConnection(connectionString);
         }
 
         public MySqlConnection GetConnection()
         {
+            if (connection == null || connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection = new MySqlConnection(connectionString);
+            }
             return connection;
         }
 
@@ -31,10 +36,15 @@ namespace GradingSys_SIA
                 {
                     connection.Open();
                 }
+                else if (connection.State == System.Data.ConnectionState.Broken)
+                {
+                    connection.Close();
+                    connection.Open();
+                }
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Error opening connection: " + ex.Message);
+                throw new Exception($"Failed to open database connection: {ex.Message}", ex);
             }
         }
 
@@ -42,15 +52,52 @@ namespace GradingSys_SIA
         {
             try
             {
-                if (connection.State == System.Data.ConnectionState.Open)
+                if (connection != null && connection.State != System.Data.ConnectionState.Closed)
                 {
                     connection.Close();
                 }
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Error closing connection: " + ex.Message);
+                throw new Exception($"Failed to close database connection: {ex.Message}", ex);
             }
+        }
+        public void ChangeDatabase(string databaseName)
+        {
+            try
+            {
+                connection.ChangeDatabase(databaseName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to change database: {ex.Message}", ex);
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (connection != null)
+                    {
+                        connection.Dispose();
+                        connection = null;
+                    }
+                }
+                _disposed = true;
+            }
+        }
+
+        ~DbConnection()
+        {
+            Dispose(false);
         }
     }
 }

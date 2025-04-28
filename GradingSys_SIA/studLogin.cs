@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using MySql.Data.MySqlClient;
 
 namespace GradingSys_SIA
@@ -17,13 +18,12 @@ namespace GradingSys_SIA
         public studLogin()
         {
             InitializeComponent();
-            db = new DbConnection();
+            db = new DbConnection("cis_db");
         }
 
         private void btn_login_Click(object sender, EventArgs e)
         {
             string cadetId = textBox1.Text.Trim();
-            MessageBox.Show("You entered ID: [" + cadetId + "]");
 
             if (string.IsNullOrEmpty(cadetId))
             {
@@ -35,40 +35,50 @@ namespace GradingSys_SIA
             {
                 db.OpenConnection();
                 MySqlConnection connection = db.GetConnection();
-                MessageBox.Show("Connection State: " + connection.State.ToString());
 
                 string query = "SELECT first_name, middle_name, last_name, profile_picture FROM cadet_info WHERE cadet_id = @cadetId";
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@cadetId", cadetId);
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                string fullName = null;
+                Image profileImage = null;
 
-                if (reader.Read())
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
-                    string firstName = reader["first_name"].ToString();
-                    string middleName = reader["middle_name"].ToString();
-                    string lastName = reader["last_name"].ToString();
+                    cmd.Parameters.AddWithValue("@cadetId", cadetId);
 
-                    Image profileImage = null;
-                    if (reader["profile_picture"] != DBNull.Value)
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        byte[] imageData = (byte[])reader["profile_picture"];
-                        using (MemoryStream ms = new MemoryStream(imageData))
+                        if (reader.Read())
                         {
-                            profileImage = Image.FromStream(ms);
+                            string firstName = reader["first_name"].ToString();
+                            string middleName = reader["middle_name"].ToString();
+                            string lastName = reader["last_name"].ToString();
+
+                            if (reader["profile_picture"] != DBNull.Value)
+                            {
+                                byte[] imageData = (byte[])reader["profile_picture"];
+                                using (MemoryStream ms = new MemoryStream(imageData))
+                                {
+                                    profileImage = Image.FromStream(ms);
+                                }
+                            }
+
+                            fullName = $"{firstName} {middleName} {lastName}";
                         }
                     }
+                }
 
-                    string fullName = $"{firstName} {middleName} {lastName}";
+                db.CloseConnection();
 
-                    sideBarPanel sideBar = new sideBarPanel(fullName, profileImage);
+                if (fullName != null)
+                {
+                    sideBarPanel sideBar = new sideBarPanel(fullName, profileImage, cadetId);
                     sideBar.Show();
                     this.Hide();
                 }
                 else
                 {
-                    reader.Close();
-                    MessageBox.Show("Wrong ID. Please try again.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Wrong ID. Please try again.", "Login Failed",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -77,7 +87,10 @@ namespace GradingSys_SIA
             }
             finally
             {
-                db.CloseConnection();
+                if (db.GetConnection().State == ConnectionState.Open)
+                {
+                    db.CloseConnection();
+                }
             }
 
         }
