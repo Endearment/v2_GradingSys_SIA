@@ -12,11 +12,17 @@ namespace GradingSys_SIA
 {
     public partial class landingPage : Form
     {
-        public landingPage()
+        private string fullName;
+        private Image profileImage;
+        public landingPage(string fullName, Image profileImage)
         {
             InitializeComponent();
-
+            this.fullName = fullName;
+            this.profileImage = profileImage;
         }
+
+
+
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -27,5 +33,22 @@ namespace GradingSys_SIA
         {
 
         }
+
+        private void landingPage_Load(object sender, EventArgs e)
+        {
+            lbl_studName.Text = "Welcome, " + fullName;
+
+            if (profileImage != null)
+            {
+                pictureBox2.Image = profileImage;
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                // Set default image if no profile image exists
+                //pictureBox2.Image = Properties.Resources.DefaultProfilePic;
+            }
+        }
     }
 }
+

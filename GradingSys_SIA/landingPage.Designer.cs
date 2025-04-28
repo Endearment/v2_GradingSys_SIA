@@ -237,6 +237,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "landingPage";
             Text = "landingPage";
+            Load += landingPage_Load;
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel3.ResumeLayout(false);
