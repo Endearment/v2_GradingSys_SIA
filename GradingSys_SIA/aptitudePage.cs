@@ -20,8 +20,8 @@ namespace GradingSys_SIA
         private void label13_Click(object sender, EventArgs e)
         {
             this.Hide();
-            sideBarPanel mainPage = new sideBarPanel();
-            mainPage.Show();
+            //sideBarPanel mainPage = new sideBarPanel();
+            //mainPage.Show();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
