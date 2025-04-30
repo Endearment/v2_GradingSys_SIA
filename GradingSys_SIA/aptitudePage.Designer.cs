@@ -36,8 +36,7 @@
             label3 = new Label();
             label4 = new Label();
             panel3 = new Panel();
-            panel5 = new Panel();
-            label13 = new Label();
+            dataGridView1 = new DataGridView();
             label6 = new Label();
             label5 = new Label();
             label7 = new Label();
@@ -52,7 +51,7 @@
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel4.SuspendLayout();
             SuspendLayout();
             // 
@@ -122,31 +121,21 @@
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(panel5);
             panel3.Controls.Add(label6);
+            panel3.Controls.Add(dataGridView1);
             panel3.Location = new Point(6, 135);
             panel3.Name = "panel3";
             panel3.Size = new Size(327, 557);
             panel3.TabIndex = 3;
             // 
-            // panel5
+            // dataGridView1
             // 
-            panel5.BackColor = Color.FromArgb(224, 224, 224);
-            panel5.Controls.Add(label13);
-            panel5.Location = new Point(24, 66);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(271, 469);
-            panel5.TabIndex = 7;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label13.Location = new Point(6, 205);
-            label13.Name = "label13";
-            label13.Size = new Size(262, 25);
-            label13.TabIndex = 0;
-            label13.Text = "DATABASE DEMERITS TABLE";
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(7, 49);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.Size = new Size(312, 483);
+            dataGridView1.TabIndex = 7;
             // 
             // label6
             // 
@@ -298,8 +287,7 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ResumeLayout(false);
@@ -322,10 +310,9 @@
         private Label label14;
         private Label label9;
         private Label label10;
-        private Panel panel5;
-        private Label label13;
         private Label label15;
         private Label label35;
         private CircularProgressBar circularProgressBar2;
+        private DataGridView dataGridView1;
     }
 }
