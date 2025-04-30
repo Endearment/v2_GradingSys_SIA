@@ -32,6 +32,7 @@
             label1 = new Label();
             panel1 = new Panel();
             panel5 = new Panel();
+            circularProgressBar1 = new CircularProgressBar();
             label14 = new Label();
             label5 = new Label();
             label9 = new Label();
@@ -88,7 +89,6 @@
             label32 = new Label();
             label38 = new Label();
             label31 = new Label();
-            circularProgressBar1 = new CircularProgressBar();
             panel1.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
@@ -148,6 +148,28 @@
             panel5.Size = new Size(325, 551);
             panel5.TabIndex = 9;
             // 
+            // circularProgressBar1
+            // 
+            circularProgressBar1.BackColor = Color.White;
+            circularProgressBar1.BarColor1 = Color.DarkOrange;
+            circularProgressBar1.BarColor2 = Color.LavenderBlush;
+            circularProgressBar1.BarWidth = 14F;
+            circularProgressBar1.Font = new Font("Segoe UI", 15F);
+            circularProgressBar1.ForeColor = Color.DarkOrange;
+            circularProgressBar1.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            circularProgressBar1.LineColor = Color.Tomato;
+            circularProgressBar1.LineWidth = 1;
+            circularProgressBar1.Location = new Point(23, 70);
+            circularProgressBar1.Maximum = 100L;
+            circularProgressBar1.MinimumSize = new Size(100, 100);
+            circularProgressBar1.Name = "circularProgressBar1";
+            circularProgressBar1.ProgressShape = CircularProgressBar._ProgressShape.Flat;
+            circularProgressBar1.Size = new Size(274, 274);
+            circularProgressBar1.TabIndex = 21;
+            circularProgressBar1.Text = "57";
+            circularProgressBar1.TextMode = CircularProgressBar._TextMode.Percentage;
+            circularProgressBar1.Value = 57L;
+            // 
             // label14
             // 
             label14.AutoSize = true;
@@ -173,9 +195,9 @@
             label9.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label9.Location = new Point(23, 423);
             label9.Name = "label9";
-            label9.Size = new Size(109, 25);
+            label9.Size = new Size(114, 25);
             label9.TabIndex = 16;
-            label9.Text = "Finals Exam:";
+            label9.Text = "Finals Grade:";
             // 
             // label12
             // 
@@ -203,9 +225,9 @@
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label10.Location = new Point(23, 487);
             label10.Name = "label10";
-            label10.Size = new Size(142, 25);
+            label10.Size = new Size(147, 25);
             label10.TabIndex = 17;
-            label10.Text = "S.Y. Exam Grade:";
+            label10.Text = "OVERALL GRADE:";
             // 
             // label8
             // 
@@ -213,9 +235,9 @@
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label8.Location = new Point(23, 381);
             label8.Name = "label8";
-            label8.Size = new Size(129, 25);
+            label8.Size = new Size(134, 25);
             label8.TabIndex = 15;
-            label8.Text = "Midterm Exam:";
+            label8.Text = "Midterm Grade:";
             // 
             // label3
             // 
@@ -269,11 +291,11 @@
             // label29
             // 
             label29.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label29.Location = new Point(15, 465);
+            label29.Location = new Point(15, 474);
             label29.Name = "label29";
             label29.Size = new Size(198, 59);
             label29.TabIndex = 35;
-            label29.Text = "Total Weighted Contribution:  ";
+            label29.Text = "Total Raw Percentage:  ";
             // 
             // label28
             // 
@@ -330,7 +352,7 @@
             label25.Name = "label25";
             label25.Size = new Size(198, 26);
             label25.TabIndex = 33;
-            label25.Text = "Weighted Contribution:  ";
+            label25.Text = "Raw Percentage:";
             // 
             // label26
             // 
@@ -396,7 +418,7 @@
             label19.Name = "label19";
             label19.Size = new Size(198, 26);
             label19.TabIndex = 26;
-            label19.Text = "Weighted Contribution:  ";
+            label19.Text = "Raw Percentage:";
             // 
             // label18
             // 
@@ -726,28 +748,6 @@
             label31.Text = "Semester Grade Calculation";
             label31.TextAlign = ContentAlignment.MiddleCenter;
             label31.Click += label31_Click;
-            // 
-            // circularProgressBar1
-            // 
-            circularProgressBar1.BackColor = Color.White;
-            circularProgressBar1.BarColor1 = Color.DarkOrange;
-            circularProgressBar1.BarColor2 = Color.LavenderBlush;
-            circularProgressBar1.BarWidth = 14F;
-            circularProgressBar1.Font = new Font("Segoe UI", 15F);
-            circularProgressBar1.ForeColor = Color.DarkOrange;
-            circularProgressBar1.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            circularProgressBar1.LineColor = Color.Tomato;
-            circularProgressBar1.LineWidth = 1;
-            circularProgressBar1.Location = new Point(23, 70);
-            circularProgressBar1.Maximum = 100L;
-            circularProgressBar1.MinimumSize = new Size(100, 100);
-            circularProgressBar1.Name = "circularProgressBar1";
-            circularProgressBar1.ProgressShape = CircularProgressBar._ProgressShape.Flat;
-            circularProgressBar1.Size = new Size(274, 274);
-            circularProgressBar1.TabIndex = 21;
-            circularProgressBar1.Text = "57";
-            circularProgressBar1.TextMode = CircularProgressBar._TextMode.Percentage;
-            circularProgressBar1.Value = 57L;
             // 
             // examPage
             // 

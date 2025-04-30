@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             label5 = new Label();
             label12 = new Label();
             label6 = new Label();
             label1 = new Label();
             textBox1 = new TextBox();
-            btn_login = new Button();
+            guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -85,7 +87,7 @@
             // 
             label1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(219, 311);
+            label1.Location = new Point(218, 337);
             label1.Name = "label1";
             label1.Size = new Size(193, 37);
             label1.TabIndex = 9;
@@ -94,23 +96,33 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(418, 311);
+            textBox1.Location = new Point(417, 337);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(150, 31);
             textBox1.TabIndex = 10;
+            textBox1.TextChanged += textBox1_TextChanged;
+            textBox1.KeyDown += textBox1_KeyDown;
+            textBox1.KeyPress += textBox1_KeyPress;
             // 
-            // btn_login
+            // guna2BorderlessForm1
             // 
-            btn_login.BackColor = Color.White;
-            btn_login.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_login.ForeColor = Color.Black;
-            btn_login.Location = new Point(348, 377);
-            btn_login.Name = "btn_login";
-            btn_login.Size = new Size(112, 34);
-            btn_login.TabIndex = 11;
-            btn_login.Text = "LOGIN";
-            btn_login.UseVisualStyleBackColor = false;
-            btn_login.Click += btn_login_Click;
+            guna2BorderlessForm1.BorderRadius = 50;
+            guna2BorderlessForm1.ContainerControl = this;
+            guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
+            guna2BorderlessForm1.ResizeForm = false;
+            guna2BorderlessForm1.TransparentWhileDrag = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(75, 83, 32);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(751, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(37, 25);
+            label2.TabIndex = 12;
+            label2.Text = "✖";
+            label2.Click += label2_Click;
             // 
             // studLogin
             // 
@@ -118,7 +130,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(75, 83, 32);
             ClientSize = new Size(800, 450);
-            Controls.Add(btn_login);
+            Controls.Add(label2);
             Controls.Add(textBox1);
             Controls.Add(label1);
             Controls.Add(label6);
@@ -143,6 +155,7 @@
         private Label label6;
         private Label label1;
         private TextBox textBox1;
-        private Button btn_login;
+        private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
+        private Label label2;
     }
 }

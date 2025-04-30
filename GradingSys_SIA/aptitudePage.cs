@@ -61,6 +61,8 @@ namespace GradingSys_SIA
 
         private void LoadStudentDemeritsWithDate()
         {
+            dataGridView1.ClearSelection();
+            dataGridView1.Enabled = false;
             DbConnection db = null;
             try
             {
@@ -128,13 +130,10 @@ namespace GradingSys_SIA
         }
 
 
-
-
-
         private void UpdateAptitudeDisplay(int totalDemerits, int aptitudePoints)
         {
-            label35.Text = totalDemerits.ToString();     
-            label15.Text = aptitudePoints.ToString();     
+            label35.Text = totalDemerits.ToString();
+            label15.Text = aptitudePoints.ToString();
 
             circularProgressBar2.Maximum = 100;
             circularProgressBar2.Value = aptitudePoints;
@@ -148,6 +147,9 @@ namespace GradingSys_SIA
         private void label5_Click(object sender, EventArgs e) { }
         private void label35_Click(object sender, EventArgs e) { }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }

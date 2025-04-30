@@ -19,80 +19,104 @@ namespace GradingSys_SIA
         {
             InitializeComponent();
             db = new DbConnection("cis_db");
+            textBox1.KeyPress += textBox1_KeyPress;
+            textBox1.MaxLength = 10;
         }
 
-        private void btn_login_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
-            string cadetId = textBox1.Text.Trim();
+            this.Close();
+        }
 
-            if (string.IsNullOrEmpty(cadetId))
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '-')
             {
-                MessageBox.Show("Please enter your Cadet ID.");
-                return;
+                e.Handled = true;
             }
+        }
 
-            try
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Enter)
             {
-                db.OpenConnection();
-                MySqlConnection connection = db.GetConnection();
+                e.SuppressKeyPress = true;
+                string cadetId = textBox1.Text.Trim();
 
-                string query = "SELECT first_name, middle_name, last_name, profile_picture FROM cadet_info WHERE cadet_id = @cadetId";
-
-                string fullName = null;
-                Image profileImage = null;
-
-                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                if (string.IsNullOrEmpty(cadetId))
                 {
-                    cmd.Parameters.AddWithValue("@cadetId", cadetId);
+                    MessageBox.Show("Please enter your Cadet ID.");
+                    return;
+                }
 
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                try
+                {
+                    db.OpenConnection();
+                    MySqlConnection connection = db.GetConnection();
+
+                    string query = "SELECT first_name, middle_name, last_name, profile_picture FROM cadet_info WHERE cadet_id = @cadetId";
+
+                    string fullName = null;
+                    Image profileImage = null;
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@cadetId", cadetId);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string firstName = reader["first_name"].ToString();
-                            string middleName = reader["middle_name"].ToString();
-                            string lastName = reader["last_name"].ToString();
-
-                            if (reader["profile_picture"] != DBNull.Value)
+                            if (reader.Read())
                             {
-                                byte[] imageData = (byte[])reader["profile_picture"];
-                                using (MemoryStream ms = new MemoryStream(imageData))
-                                {
-                                    profileImage = Image.FromStream(ms);
-                                }
-                            }
+                                string firstName = reader["first_name"].ToString();
+                                string middleName = reader["middle_name"].ToString();
+                                string lastName = reader["last_name"].ToString();
 
-                            fullName = $"{firstName} {middleName} {lastName}";
+                                if (reader["profile_picture"] != DBNull.Value)
+                                {
+                                    byte[] imageData = (byte[])reader["profile_picture"];
+                                    using (MemoryStream ms = new MemoryStream(imageData))
+                                    {
+                                        profileImage = Image.FromStream(ms);
+                                    }
+                                }
+
+                                fullName = $"{firstName} {middleName} {lastName}";
+                            }
                         }
                     }
-                }
 
-                db.CloseConnection();
-
-                if (fullName != null)
-                {
-                    sideBarPanel sideBar = new sideBarPanel(fullName, profileImage, cadetId);
-                    sideBar.Show();
-                    this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Wrong ID. Please try again.", "Login Failed",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-            finally
-            {
-                if (db.GetConnection().State == ConnectionState.Open)
-                {
                     db.CloseConnection();
+
+                    if (fullName != null)
+                    {
+                        sideBarPanel sideBar = new sideBarPanel(fullName, profileImage, cadetId);
+                        sideBar.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("ID Does not exist. Please try again.", "Login Failed",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+                finally
+                {
+                    if (db.GetConnection().State == ConnectionState.Open)
+                    {
+                        db.CloseConnection();
+                    }
                 }
             }
-
         }
     }
 }

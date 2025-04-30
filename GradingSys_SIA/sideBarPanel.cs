@@ -129,5 +129,10 @@ namespace GradingSys_SIA
                 Application.Exit();
             }
         }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
