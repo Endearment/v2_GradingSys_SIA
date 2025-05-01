@@ -25,7 +25,7 @@ namespace GradingSys_SIA
             DbConnection db = null;
             try
             {
-                db = new DbConnection("grading_db");
+                db = new DbConnection("cis_db");
                 db.OpenConnection();
                 MySqlConnection conn = db.GetConnection();
 
@@ -66,7 +66,7 @@ namespace GradingSys_SIA
             DbConnection db = null;
             try
             {
-                db = new DbConnection("grading_db");
+                db = new DbConnection("cis_db");
                 db.OpenConnection();
                 MySqlConnection conn = db.GetConnection();
 
