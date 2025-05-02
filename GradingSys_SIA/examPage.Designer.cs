@@ -32,7 +32,6 @@
             label1 = new Label();
             panel1 = new Panel();
             panel5 = new Panel();
-            circularProgressBar1 = new CircularProgressBar();
             label14 = new Label();
             label5 = new Label();
             label9 = new Label();
@@ -42,20 +41,20 @@
             label8 = new Label();
             label3 = new Label();
             panel2 = new Panel();
-            label30 = new Label();
+            lblTotalRaw = new Label();
             label29 = new Label();
             label28 = new Label();
             label16 = new Label();
-            label17 = new Label();
-            label20 = new Label();
-            label24 = new Label();
+            txtFinalsScore = new Label();
+            lblFinalsRaw = new Label();
+            txtFinalsMax = new Label();
             label25 = new Label();
             label26 = new Label();
             label27 = new Label();
             label13 = new Label();
-            label21 = new Label();
-            label22 = new Label();
-            label23 = new Label();
+            txtMidtermScore = new Label();
+            lblMidtermRaw = new Label();
+            txtMidtermMax = new Label();
             label19 = new Label();
             label18 = new Label();
             label15 = new Label();
@@ -64,28 +63,28 @@
             label4 = new Label();
             panel3 = new Panel();
             panel7 = new Panel();
-            label53 = new Label();
+            lblOverallGrade = new Label();
             label52 = new Label();
             panel6 = new Panel();
             label42 = new Label();
-            label43 = new Label();
+            lblFinalsGrade = new Label();
             label44 = new Label();
             label45 = new Label();
-            label46 = new Label();
+            lblaptitudeWeightedFinals = new Label();
             label47 = new Label();
-            label48 = new Label();
-            label49 = new Label();
+            lblExamWeightedFinals = new Label();
+            txtAttendanceFinals = new Label();
             label50 = new Label();
             label51 = new Label();
             panel4 = new Panel();
             label36 = new Label();
-            label41 = new Label();
+            lblMidtermGrade = new Label();
             label39 = new Label();
             label40 = new Label();
-            label34 = new Label();
+            lblaptitudeWeightedMidterm = new Label();
             label35 = new Label();
-            label37 = new Label();
-            label33 = new Label();
+            lblExamWeightedMidterm = new Label();
+            txtAttendanceMidterm = new Label();
             label32 = new Label();
             label38 = new Label();
             label31 = new Label();
@@ -102,9 +101,10 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 54);
+            label2.Location = new Point(10, 32);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(402, 28);
+            label2.Size = new Size(286, 19);
             label2.TabIndex = 1;
             label2.Text = "You did your best! Here are your exam result.";
             label2.Click += label2_Click;
@@ -114,9 +114,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(14, 9);
+            label1.Location = new Point(10, 5);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(306, 45);
+            label1.Size = new Size(210, 30);
             label1.TabIndex = 0;
             label1.Text = "Examination Result";
             label1.Click += label1_Click;
@@ -127,14 +128,14 @@
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(938, 129);
+            panel1.Size = new Size(657, 77);
             panel1.TabIndex = 1;
             // 
             // panel5
             // 
             panel5.BackColor = Color.White;
-            panel5.Controls.Add(circularProgressBar1);
             panel5.Controls.Add(label14);
             panel5.Controls.Add(label5);
             panel5.Controls.Add(label9);
@@ -143,39 +144,19 @@
             panel5.Controls.Add(label10);
             panel5.Controls.Add(label8);
             panel5.Controls.Add(label3);
-            panel5.Location = new Point(12, 138);
+            panel5.Location = new Point(8, 83);
+            panel5.Margin = new Padding(2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(325, 551);
+            panel5.Size = new Size(228, 331);
             panel5.TabIndex = 9;
-            // 
-            // circularProgressBar1
-            // 
-            circularProgressBar1.BackColor = Color.White;
-            circularProgressBar1.BarColor1 = Color.DarkOrange;
-            circularProgressBar1.BarColor2 = Color.LavenderBlush;
-            circularProgressBar1.BarWidth = 14F;
-            circularProgressBar1.Font = new Font("Segoe UI", 15F);
-            circularProgressBar1.ForeColor = Color.DarkOrange;
-            circularProgressBar1.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            circularProgressBar1.LineColor = Color.Tomato;
-            circularProgressBar1.LineWidth = 1;
-            circularProgressBar1.Location = new Point(23, 70);
-            circularProgressBar1.Maximum = 100L;
-            circularProgressBar1.MinimumSize = new Size(100, 100);
-            circularProgressBar1.Name = "circularProgressBar1";
-            circularProgressBar1.ProgressShape = CircularProgressBar._ProgressShape.Flat;
-            circularProgressBar1.Size = new Size(274, 274);
-            circularProgressBar1.TabIndex = 21;
-            circularProgressBar1.Text = "57";
-            circularProgressBar1.TextMode = CircularProgressBar._TextMode.Percentage;
-            circularProgressBar1.Value = 57L;
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(13, 448);
+            label14.Location = new Point(9, 269);
+            label14.Margin = new Padding(2, 0, 2, 0);
             label14.Name = "label14";
-            label14.Size = new Size(285, 25);
+            label14.Size = new Size(202, 15);
             label14.TabIndex = 20;
             label14.Text = "_______________________________________";
             // 
@@ -183,9 +164,10 @@
             // 
             label5.AutoSize = true;
             label5.BackColor = Color.Gainsboro;
-            label5.Location = new Point(227, 381);
+            label5.Location = new Point(159, 229);
+            label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(52, 25);
+            label5.Size = new Size(31, 15);
             label5.TabIndex = 14;
             label5.Text = "        ";
             // 
@@ -193,9 +175,10 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(23, 423);
+            label9.Location = new Point(16, 254);
+            label9.Margin = new Padding(2, 0, 2, 0);
             label9.Name = "label9";
-            label9.Size = new Size(114, 25);
+            label9.Size = new Size(76, 15);
             label9.TabIndex = 16;
             label9.Text = "Finals Grade:";
             // 
@@ -203,9 +186,10 @@
             // 
             label12.AutoSize = true;
             label12.BackColor = Color.Gainsboro;
-            label12.Location = new Point(227, 487);
+            label12.Location = new Point(159, 292);
+            label12.Margin = new Padding(2, 0, 2, 0);
             label12.Name = "label12";
-            label12.Size = new Size(52, 25);
+            label12.Size = new Size(31, 15);
             label12.TabIndex = 19;
             label12.Text = "        ";
             // 
@@ -213,9 +197,10 @@
             // 
             label11.AutoSize = true;
             label11.BackColor = Color.Gainsboro;
-            label11.Location = new Point(227, 423);
+            label11.Location = new Point(159, 254);
+            label11.Margin = new Padding(2, 0, 2, 0);
             label11.Name = "label11";
-            label11.Size = new Size(52, 25);
+            label11.Size = new Size(31, 15);
             label11.TabIndex = 18;
             label11.Text = "        ";
             // 
@@ -223,9 +208,10 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label10.Location = new Point(23, 487);
+            label10.Location = new Point(16, 292);
+            label10.Margin = new Padding(2, 0, 2, 0);
             label10.Name = "label10";
-            label10.Size = new Size(147, 25);
+            label10.Size = new Size(101, 15);
             label10.TabIndex = 17;
             label10.Text = "OVERALL GRADE:";
             // 
@@ -233,18 +219,20 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label8.Location = new Point(23, 381);
+            label8.Location = new Point(16, 229);
+            label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
-            label8.Size = new Size(134, 25);
+            label8.Size = new Size(89, 15);
             label8.TabIndex = 15;
             label8.Text = "Midterm Grade:";
             // 
             // label3
             // 
             label3.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(13, 14);
+            label3.Location = new Point(9, 8);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(309, 38);
+            label3.Size = new Size(216, 23);
             label3.TabIndex = 4;
             label3.Text = "Exam Grade Summary";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -253,188 +241,206 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(label30);
+            panel2.Controls.Add(lblTotalRaw);
             panel2.Controls.Add(label29);
             panel2.Controls.Add(label28);
             panel2.Controls.Add(label16);
-            panel2.Controls.Add(label17);
-            panel2.Controls.Add(label20);
-            panel2.Controls.Add(label24);
+            panel2.Controls.Add(txtFinalsScore);
+            panel2.Controls.Add(lblFinalsRaw);
+            panel2.Controls.Add(txtFinalsMax);
             panel2.Controls.Add(label25);
             panel2.Controls.Add(label26);
             panel2.Controls.Add(label27);
             panel2.Controls.Add(label13);
-            panel2.Controls.Add(label21);
-            panel2.Controls.Add(label22);
-            panel2.Controls.Add(label23);
+            panel2.Controls.Add(txtMidtermScore);
+            panel2.Controls.Add(lblMidtermRaw);
+            panel2.Controls.Add(txtMidtermMax);
             panel2.Controls.Add(label19);
             panel2.Controls.Add(label18);
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label7);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(label4);
-            panel2.Location = new Point(343, 138);
+            panel2.Location = new Point(240, 83);
+            panel2.Margin = new Padding(2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(293, 551);
+            panel2.Size = new Size(205, 331);
             panel2.TabIndex = 10;
             // 
-            // label30
+            // lblTotalRaw
             // 
-            label30.AutoSize = true;
-            label30.BackColor = Color.Gainsboro;
-            label30.Location = new Point(225, 478);
-            label30.Name = "label30";
-            label30.Size = new Size(52, 25);
-            label30.TabIndex = 36;
-            label30.Text = "        ";
+            lblTotalRaw.AutoSize = true;
+            lblTotalRaw.BackColor = Color.Gainsboro;
+            lblTotalRaw.Location = new Point(158, 287);
+            lblTotalRaw.Margin = new Padding(2, 0, 2, 0);
+            lblTotalRaw.Name = "lblTotalRaw";
+            lblTotalRaw.Size = new Size(31, 15);
+            lblTotalRaw.TabIndex = 36;
+            lblTotalRaw.Text = "        ";
             // 
             // label29
             // 
             label29.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label29.Location = new Point(15, 474);
+            label29.Location = new Point(10, 284);
+            label29.Margin = new Padding(2, 0, 2, 0);
             label29.Name = "label29";
-            label29.Size = new Size(198, 59);
+            label29.Size = new Size(139, 35);
             label29.TabIndex = 35;
             label29.Text = "Total Raw Percentage:  ";
             // 
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new Point(3, 423);
+            label28.Location = new Point(2, 254);
+            label28.Margin = new Padding(2, 0, 2, 0);
             label28.Name = "label28";
-            label28.Size = new Size(285, 25);
+            label28.Size = new Size(202, 15);
             label28.TabIndex = 34;
             label28.Text = "_______________________________________";
             // 
             // label16
             // 
             label16.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label16.Location = new Point(15, 338);
+            label16.Location = new Point(10, 203);
+            label16.Margin = new Padding(2, 0, 2, 0);
             label16.Name = "label16";
-            label16.Size = new Size(110, 26);
+            label16.Size = new Size(77, 16);
             label16.TabIndex = 28;
             label16.Text = "Total Items:";
             // 
-            // label17
+            // txtFinalsScore
             // 
-            label17.AutoSize = true;
-            label17.BackColor = Color.Gainsboro;
-            label17.Location = new Point(225, 302);
-            label17.Name = "label17";
-            label17.Size = new Size(52, 25);
-            label17.TabIndex = 29;
-            label17.Text = "        ";
+            txtFinalsScore.AutoSize = true;
+            txtFinalsScore.BackColor = Color.Gainsboro;
+            txtFinalsScore.Location = new Point(158, 181);
+            txtFinalsScore.Margin = new Padding(2, 0, 2, 0);
+            txtFinalsScore.Name = "txtFinalsScore";
+            txtFinalsScore.Size = new Size(31, 15);
+            txtFinalsScore.TabIndex = 29;
+            txtFinalsScore.Text = "        ";
             // 
-            // label20
+            // lblFinalsRaw
             // 
-            label20.AutoSize = true;
-            label20.BackColor = Color.Gainsboro;
-            label20.Location = new Point(225, 389);
-            label20.Name = "label20";
-            label20.Size = new Size(52, 25);
-            label20.TabIndex = 31;
-            label20.Text = "        ";
+            lblFinalsRaw.AutoSize = true;
+            lblFinalsRaw.BackColor = Color.Gainsboro;
+            lblFinalsRaw.Location = new Point(158, 233);
+            lblFinalsRaw.Margin = new Padding(2, 0, 2, 0);
+            lblFinalsRaw.Name = "lblFinalsRaw";
+            lblFinalsRaw.Size = new Size(31, 15);
+            lblFinalsRaw.TabIndex = 31;
+            lblFinalsRaw.Text = "        ";
             // 
-            // label24
+            // txtFinalsMax
             // 
-            label24.AutoSize = true;
-            label24.BackColor = Color.Gainsboro;
-            label24.Location = new Point(225, 338);
-            label24.Name = "label24";
-            label24.Size = new Size(52, 25);
-            label24.TabIndex = 30;
-            label24.Text = "        ";
+            txtFinalsMax.AutoSize = true;
+            txtFinalsMax.BackColor = Color.Gainsboro;
+            txtFinalsMax.Location = new Point(158, 203);
+            txtFinalsMax.Margin = new Padding(2, 0, 2, 0);
+            txtFinalsMax.Name = "txtFinalsMax";
+            txtFinalsMax.Size = new Size(31, 15);
+            txtFinalsMax.TabIndex = 30;
+            txtFinalsMax.Text = "        ";
             // 
             // label25
             // 
             label25.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label25.Location = new Point(15, 388);
+            label25.Location = new Point(10, 233);
+            label25.Margin = new Padding(2, 0, 2, 0);
             label25.Name = "label25";
-            label25.Size = new Size(198, 26);
+            label25.Size = new Size(139, 16);
             label25.TabIndex = 33;
             label25.Text = "Raw Percentage:";
             // 
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new Point(3, 353);
+            label26.Location = new Point(2, 212);
+            label26.Margin = new Padding(2, 0, 2, 0);
             label26.Name = "label26";
-            label26.Size = new Size(285, 25);
+            label26.Size = new Size(202, 15);
             label26.TabIndex = 32;
             label26.Text = "_______________________________________";
             // 
             // label27
             // 
             label27.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label27.Location = new Point(15, 302);
+            label27.Location = new Point(10, 181);
+            label27.Margin = new Padding(2, 0, 2, 0);
             label27.Name = "label27";
-            label27.Size = new Size(110, 25);
+            label27.Size = new Size(77, 15);
             label27.TabIndex = 27;
             label27.Text = "Exam Score:";
             // 
             // label13
             // 
             label13.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label13.Location = new Point(15, 152);
+            label13.Location = new Point(10, 91);
+            label13.Margin = new Padding(2, 0, 2, 0);
             label13.Name = "label13";
-            label13.Size = new Size(110, 26);
+            label13.Size = new Size(77, 16);
             label13.TabIndex = 21;
             label13.Text = "Total Items:";
             // 
-            // label21
+            // txtMidtermScore
             // 
-            label21.AutoSize = true;
-            label21.BackColor = Color.Gainsboro;
-            label21.Location = new Point(225, 116);
-            label21.Name = "label21";
-            label21.Size = new Size(52, 25);
-            label21.TabIndex = 21;
-            label21.Text = "        ";
+            txtMidtermScore.AutoSize = true;
+            txtMidtermScore.BackColor = Color.Gainsboro;
+            txtMidtermScore.Location = new Point(158, 70);
+            txtMidtermScore.Margin = new Padding(2, 0, 2, 0);
+            txtMidtermScore.Name = "txtMidtermScore";
+            txtMidtermScore.Size = new Size(31, 15);
+            txtMidtermScore.TabIndex = 21;
+            txtMidtermScore.Text = "        ";
             // 
-            // label22
+            // lblMidtermRaw
             // 
-            label22.AutoSize = true;
-            label22.BackColor = Color.Gainsboro;
-            label22.Location = new Point(225, 203);
-            label22.Name = "label22";
-            label22.Size = new Size(52, 25);
-            label22.TabIndex = 23;
-            label22.Text = "        ";
+            lblMidtermRaw.AutoSize = true;
+            lblMidtermRaw.BackColor = Color.Gainsboro;
+            lblMidtermRaw.Location = new Point(158, 122);
+            lblMidtermRaw.Margin = new Padding(2, 0, 2, 0);
+            lblMidtermRaw.Name = "lblMidtermRaw";
+            lblMidtermRaw.Size = new Size(31, 15);
+            lblMidtermRaw.TabIndex = 23;
+            lblMidtermRaw.Text = "        ";
             // 
-            // label23
+            // txtMidtermMax
             // 
-            label23.AutoSize = true;
-            label23.BackColor = Color.Gainsboro;
-            label23.Location = new Point(225, 152);
-            label23.Name = "label23";
-            label23.Size = new Size(52, 25);
-            label23.TabIndex = 22;
-            label23.Text = "        ";
+            txtMidtermMax.AutoSize = true;
+            txtMidtermMax.BackColor = Color.Gainsboro;
+            txtMidtermMax.Location = new Point(158, 91);
+            txtMidtermMax.Margin = new Padding(2, 0, 2, 0);
+            txtMidtermMax.Name = "txtMidtermMax";
+            txtMidtermMax.Size = new Size(31, 15);
+            txtMidtermMax.TabIndex = 22;
+            txtMidtermMax.Text = "        ";
             // 
             // label19
             // 
             label19.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label19.Location = new Point(15, 202);
+            label19.Location = new Point(10, 121);
+            label19.Margin = new Padding(2, 0, 2, 0);
             label19.Name = "label19";
-            label19.Size = new Size(198, 26);
+            label19.Size = new Size(139, 16);
             label19.TabIndex = 26;
             label19.Text = "Raw Percentage:";
             // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(3, 167);
+            label18.Location = new Point(2, 100);
+            label18.Margin = new Padding(2, 0, 2, 0);
             label18.Name = "label18";
-            label18.Size = new Size(285, 25);
+            label18.Size = new Size(202, 15);
             label18.TabIndex = 25;
             label18.Text = "_______________________________________";
             // 
             // label15
             // 
             label15.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label15.Location = new Point(3, 261);
+            label15.Location = new Point(2, 157);
+            label15.Margin = new Padding(2, 0, 2, 0);
             label15.Name = "label15";
-            label15.Size = new Size(285, 26);
+            label15.Size = new Size(200, 16);
             label15.TabIndex = 22;
             label15.Text = "FINALS EXAM";
             label15.TextAlign = ContentAlignment.MiddleCenter;
@@ -442,9 +448,10 @@
             // label7
             // 
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label7.Location = new Point(15, 116);
+            label7.Location = new Point(10, 70);
+            label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
-            label7.Size = new Size(110, 25);
+            label7.Size = new Size(77, 15);
             label7.TabIndex = 20;
             label7.Text = "Exam Score:";
             label7.Click += label7_Click;
@@ -452,9 +459,10 @@
             // label6
             // 
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(3, 66);
+            label6.Location = new Point(2, 40);
+            label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new Size(287, 26);
+            label6.Size = new Size(201, 16);
             label6.TabIndex = 19;
             label6.Text = "MIDTERM EXAM";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -462,9 +470,10 @@
             // label4
             // 
             label4.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(8, 14);
+            label4.Location = new Point(6, 8);
+            label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(282, 38);
+            label4.Size = new Size(197, 23);
             label4.TabIndex = 18;
             label4.Text = "Exam Grade";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -476,37 +485,41 @@
             panel3.Controls.Add(panel6);
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label31);
-            panel3.Location = new Point(642, 138);
+            panel3.Location = new Point(449, 83);
+            panel3.Margin = new Padding(2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(281, 551);
+            panel3.Size = new Size(197, 331);
             panel3.TabIndex = 11;
             // 
             // panel7
             // 
             panel7.BackColor = Color.FromArgb(192, 255, 255);
-            panel7.Controls.Add(label53);
+            panel7.Controls.Add(lblOverallGrade);
             panel7.Controls.Add(label52);
-            panel7.Location = new Point(14, 479);
+            panel7.Location = new Point(10, 287);
+            panel7.Margin = new Padding(2);
             panel7.Name = "panel7";
-            panel7.Size = new Size(256, 62);
+            panel7.Size = new Size(179, 37);
             panel7.TabIndex = 47;
             // 
-            // label53
+            // lblOverallGrade
             // 
-            label53.AutoSize = true;
-            label53.BackColor = Color.Gainsboro;
-            label53.Location = new Point(194, 20);
-            label53.Name = "label53";
-            label53.Size = new Size(52, 25);
-            label53.TabIndex = 46;
-            label53.Text = "        ";
+            lblOverallGrade.AutoSize = true;
+            lblOverallGrade.BackColor = Color.Gainsboro;
+            lblOverallGrade.Location = new Point(136, 12);
+            lblOverallGrade.Margin = new Padding(2, 0, 2, 0);
+            lblOverallGrade.Name = "lblOverallGrade";
+            lblOverallGrade.Size = new Size(31, 15);
+            lblOverallGrade.TabIndex = 46;
+            lblOverallGrade.Text = "        ";
             // 
             // label52
             // 
             label52.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label52.Location = new Point(3, 12);
+            label52.Location = new Point(2, 7);
+            label52.Margin = new Padding(2, 0, 2, 0);
             label52.Name = "label52";
-            label52.Size = new Size(149, 42);
+            label52.Size = new Size(104, 25);
             label52.TabIndex = 46;
             label52.Text = "OVERALL GRADE:";
             label52.TextAlign = ContentAlignment.MiddleCenter;
@@ -515,45 +528,49 @@
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(label42);
-            panel6.Controls.Add(label43);
+            panel6.Controls.Add(lblFinalsGrade);
             panel6.Controls.Add(label44);
             panel6.Controls.Add(label45);
-            panel6.Controls.Add(label46);
+            panel6.Controls.Add(lblaptitudeWeightedFinals);
             panel6.Controls.Add(label47);
-            panel6.Controls.Add(label48);
-            panel6.Controls.Add(label49);
+            panel6.Controls.Add(lblExamWeightedFinals);
+            panel6.Controls.Add(txtAttendanceFinals);
             panel6.Controls.Add(label50);
             panel6.Controls.Add(label51);
-            panel6.Location = new Point(14, 269);
+            panel6.Location = new Point(10, 161);
+            panel6.Margin = new Padding(2);
             panel6.Name = "panel6";
-            panel6.Size = new Size(256, 204);
+            panel6.Size = new Size(179, 122);
             panel6.TabIndex = 46;
             // 
             // label42
             // 
             label42.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label42.Location = new Point(3, 121);
+            label42.Location = new Point(2, 73);
+            label42.Margin = new Padding(2, 0, 2, 0);
             label42.Name = "label42";
-            label42.Size = new Size(110, 26);
+            label42.Size = new Size(77, 16);
             label42.TabIndex = 41;
             label42.Text = "Exam:";
             // 
-            // label43
+            // lblFinalsGrade
             // 
-            label43.AutoSize = true;
-            label43.BackColor = Color.Gainsboro;
-            label43.Location = new Point(194, 172);
-            label43.Name = "label43";
-            label43.Size = new Size(52, 25);
-            label43.TabIndex = 45;
-            label43.Text = "        ";
+            lblFinalsGrade.AutoSize = true;
+            lblFinalsGrade.BackColor = Color.Gainsboro;
+            lblFinalsGrade.Location = new Point(136, 103);
+            lblFinalsGrade.Margin = new Padding(2, 0, 2, 0);
+            lblFinalsGrade.Name = "lblFinalsGrade";
+            lblFinalsGrade.Size = new Size(31, 15);
+            lblFinalsGrade.TabIndex = 45;
+            lblFinalsGrade.Text = "        ";
             // 
             // label44
             // 
             label44.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label44.Location = new Point(-6, 0);
+            label44.Location = new Point(-4, 0);
+            label44.Margin = new Padding(2, 0, 2, 0);
             label44.Name = "label44";
-            label44.Size = new Size(275, 26);
+            label44.Size = new Size(192, 16);
             label44.TabIndex = 37;
             label44.Text = "FINALS GRADE";
             label44.TextAlign = ContentAlignment.MiddleCenter;
@@ -561,66 +578,73 @@
             // label45
             // 
             label45.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label45.Location = new Point(3, 171);
+            label45.Location = new Point(2, 103);
+            label45.Margin = new Padding(2, 0, 2, 0);
             label45.Name = "label45";
-            label45.Size = new Size(138, 26);
+            label45.Size = new Size(97, 16);
             label45.TabIndex = 44;
             label45.Text = "Finals Grade:";
             // 
-            // label46
+            // lblaptitudeWeightedFinals
             // 
-            label46.AutoSize = true;
-            label46.BackColor = Color.Gainsboro;
-            label46.Location = new Point(194, 86);
-            label46.Name = "label46";
-            label46.Size = new Size(52, 25);
-            label46.TabIndex = 40;
-            label46.Text = "        ";
+            lblaptitudeWeightedFinals.AutoSize = true;
+            lblaptitudeWeightedFinals.BackColor = Color.Gainsboro;
+            lblaptitudeWeightedFinals.Location = new Point(136, 52);
+            lblaptitudeWeightedFinals.Margin = new Padding(2, 0, 2, 0);
+            lblaptitudeWeightedFinals.Name = "lblaptitudeWeightedFinals";
+            lblaptitudeWeightedFinals.Size = new Size(31, 15);
+            lblaptitudeWeightedFinals.TabIndex = 40;
+            lblaptitudeWeightedFinals.Text = "        ";
             // 
             // label47
             // 
             label47.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label47.Location = new Point(3, 50);
+            label47.Location = new Point(2, 30);
+            label47.Margin = new Padding(2, 0, 2, 0);
             label47.Name = "label47";
-            label47.Size = new Size(110, 25);
+            label47.Size = new Size(77, 15);
             label47.TabIndex = 37;
             label47.Text = "Attendance: ";
             // 
-            // label48
+            // lblExamWeightedFinals
             // 
-            label48.AutoSize = true;
-            label48.BackColor = Color.Gainsboro;
-            label48.Location = new Point(194, 123);
-            label48.Name = "label48";
-            label48.Size = new Size(52, 25);
-            label48.TabIndex = 42;
-            label48.Text = "        ";
+            lblExamWeightedFinals.AutoSize = true;
+            lblExamWeightedFinals.BackColor = Color.Gainsboro;
+            lblExamWeightedFinals.Location = new Point(136, 74);
+            lblExamWeightedFinals.Margin = new Padding(2, 0, 2, 0);
+            lblExamWeightedFinals.Name = "lblExamWeightedFinals";
+            lblExamWeightedFinals.Size = new Size(31, 15);
+            lblExamWeightedFinals.TabIndex = 42;
+            lblExamWeightedFinals.Text = "        ";
             // 
-            // label49
+            // txtAttendanceFinals
             // 
-            label49.AutoSize = true;
-            label49.BackColor = Color.Gainsboro;
-            label49.Location = new Point(194, 50);
-            label49.Name = "label49";
-            label49.Size = new Size(52, 25);
-            label49.TabIndex = 39;
-            label49.Text = "        ";
+            txtAttendanceFinals.AutoSize = true;
+            txtAttendanceFinals.BackColor = Color.Gainsboro;
+            txtAttendanceFinals.Location = new Point(136, 30);
+            txtAttendanceFinals.Margin = new Padding(2, 0, 2, 0);
+            txtAttendanceFinals.Name = "txtAttendanceFinals";
+            txtAttendanceFinals.Size = new Size(31, 15);
+            txtAttendanceFinals.TabIndex = 39;
+            txtAttendanceFinals.Text = "        ";
             // 
             // label50
             // 
             label50.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label50.Location = new Point(3, 86);
+            label50.Location = new Point(2, 52);
+            label50.Margin = new Padding(2, 0, 2, 0);
             label50.Name = "label50";
-            label50.Size = new Size(110, 26);
+            label50.Size = new Size(77, 16);
             label50.TabIndex = 38;
             label50.Text = "Aptitude:";
             // 
             // label51
             // 
             label51.AutoSize = true;
-            label51.Location = new Point(3, 137);
+            label51.Location = new Point(2, 82);
+            label51.Margin = new Padding(2, 0, 2, 0);
             label51.Name = "label51";
-            label51.Size = new Size(264, 25);
+            label51.Size = new Size(187, 15);
             label51.TabIndex = 37;
             label51.Text = "____________________________________";
             // 
@@ -628,45 +652,49 @@
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(label36);
-            panel4.Controls.Add(label41);
+            panel4.Controls.Add(lblMidtermGrade);
             panel4.Controls.Add(label39);
             panel4.Controls.Add(label40);
-            panel4.Controls.Add(label34);
+            panel4.Controls.Add(lblaptitudeWeightedMidterm);
             panel4.Controls.Add(label35);
-            panel4.Controls.Add(label37);
-            panel4.Controls.Add(label33);
+            panel4.Controls.Add(lblExamWeightedMidterm);
+            panel4.Controls.Add(txtAttendanceMidterm);
             panel4.Controls.Add(label32);
             panel4.Controls.Add(label38);
-            panel4.Location = new Point(14, 55);
+            panel4.Location = new Point(10, 33);
+            panel4.Margin = new Padding(2);
             panel4.Name = "panel4";
-            panel4.Size = new Size(256, 205);
+            panel4.Size = new Size(179, 123);
             panel4.TabIndex = 43;
             // 
             // label36
             // 
             label36.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label36.Location = new Point(3, 121);
+            label36.Location = new Point(2, 73);
+            label36.Margin = new Padding(2, 0, 2, 0);
             label36.Name = "label36";
-            label36.Size = new Size(110, 26);
+            label36.Size = new Size(77, 16);
             label36.TabIndex = 41;
             label36.Text = "Exam:";
             // 
-            // label41
+            // lblMidtermGrade
             // 
-            label41.AutoSize = true;
-            label41.BackColor = Color.Gainsboro;
-            label41.Location = new Point(194, 172);
-            label41.Name = "label41";
-            label41.Size = new Size(52, 25);
-            label41.TabIndex = 45;
-            label41.Text = "        ";
+            lblMidtermGrade.AutoSize = true;
+            lblMidtermGrade.BackColor = Color.Gainsboro;
+            lblMidtermGrade.Location = new Point(136, 103);
+            lblMidtermGrade.Margin = new Padding(2, 0, 2, 0);
+            lblMidtermGrade.Name = "lblMidtermGrade";
+            lblMidtermGrade.Size = new Size(31, 15);
+            lblMidtermGrade.TabIndex = 45;
+            lblMidtermGrade.Text = "        ";
             // 
             // label39
             // 
             label39.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label39.Location = new Point(-6, 0);
+            label39.Location = new Point(-4, 0);
+            label39.Margin = new Padding(2, 0, 2, 0);
             label39.Name = "label39";
-            label39.Size = new Size(275, 26);
+            label39.Size = new Size(192, 16);
             label39.TabIndex = 37;
             label39.Text = "MIDTERM GRADE";
             label39.TextAlign = ContentAlignment.MiddleCenter;
@@ -674,76 +702,84 @@
             // label40
             // 
             label40.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label40.Location = new Point(3, 171);
+            label40.Location = new Point(2, 103);
+            label40.Margin = new Padding(2, 0, 2, 0);
             label40.Name = "label40";
-            label40.Size = new Size(138, 26);
+            label40.Size = new Size(97, 16);
             label40.TabIndex = 44;
             label40.Text = "Midterm Grade:";
             // 
-            // label34
+            // lblaptitudeWeightedMidterm
             // 
-            label34.AutoSize = true;
-            label34.BackColor = Color.Gainsboro;
-            label34.Location = new Point(194, 86);
-            label34.Name = "label34";
-            label34.Size = new Size(52, 25);
-            label34.TabIndex = 40;
-            label34.Text = "        ";
+            lblaptitudeWeightedMidterm.AutoSize = true;
+            lblaptitudeWeightedMidterm.BackColor = Color.Gainsboro;
+            lblaptitudeWeightedMidterm.Location = new Point(136, 52);
+            lblaptitudeWeightedMidterm.Margin = new Padding(2, 0, 2, 0);
+            lblaptitudeWeightedMidterm.Name = "lblaptitudeWeightedMidterm";
+            lblaptitudeWeightedMidterm.Size = new Size(31, 15);
+            lblaptitudeWeightedMidterm.TabIndex = 40;
+            lblaptitudeWeightedMidterm.Text = "        ";
             // 
             // label35
             // 
             label35.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label35.Location = new Point(3, 50);
+            label35.Location = new Point(2, 30);
+            label35.Margin = new Padding(2, 0, 2, 0);
             label35.Name = "label35";
-            label35.Size = new Size(110, 25);
+            label35.Size = new Size(77, 15);
             label35.TabIndex = 37;
             label35.Text = "Attendance: ";
             // 
-            // label37
+            // lblExamWeightedMidterm
             // 
-            label37.AutoSize = true;
-            label37.BackColor = Color.Gainsboro;
-            label37.Location = new Point(194, 123);
-            label37.Name = "label37";
-            label37.Size = new Size(52, 25);
-            label37.TabIndex = 42;
-            label37.Text = "        ";
+            lblExamWeightedMidterm.AutoSize = true;
+            lblExamWeightedMidterm.BackColor = Color.Gainsboro;
+            lblExamWeightedMidterm.Location = new Point(136, 74);
+            lblExamWeightedMidterm.Margin = new Padding(2, 0, 2, 0);
+            lblExamWeightedMidterm.Name = "lblExamWeightedMidterm";
+            lblExamWeightedMidterm.Size = new Size(31, 15);
+            lblExamWeightedMidterm.TabIndex = 42;
+            lblExamWeightedMidterm.Text = "        ";
             // 
-            // label33
+            // txtAttendanceMidterm
             // 
-            label33.AutoSize = true;
-            label33.BackColor = Color.Gainsboro;
-            label33.Location = new Point(194, 50);
-            label33.Name = "label33";
-            label33.Size = new Size(52, 25);
-            label33.TabIndex = 39;
-            label33.Text = "        ";
-            label33.Click += label33_Click;
+            txtAttendanceMidterm.AutoSize = true;
+            txtAttendanceMidterm.BackColor = Color.Gainsboro;
+            txtAttendanceMidterm.Location = new Point(136, 30);
+            txtAttendanceMidterm.Margin = new Padding(2, 0, 2, 0);
+            txtAttendanceMidterm.Name = "txtAttendanceMidterm";
+            txtAttendanceMidterm.Size = new Size(31, 15);
+            txtAttendanceMidterm.TabIndex = 39;
+            txtAttendanceMidterm.Text = "        ";
+            txtAttendanceMidterm.Click += label33_Click;
             // 
             // label32
             // 
             label32.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label32.Location = new Point(3, 86);
+            label32.Location = new Point(2, 52);
+            label32.Margin = new Padding(2, 0, 2, 0);
             label32.Name = "label32";
-            label32.Size = new Size(110, 26);
+            label32.Size = new Size(77, 16);
             label32.TabIndex = 38;
             label32.Text = "Aptitude:";
             // 
             // label38
             // 
             label38.AutoSize = true;
-            label38.Location = new Point(3, 137);
+            label38.Location = new Point(2, 82);
+            label38.Margin = new Padding(2, 0, 2, 0);
             label38.Name = "label38";
-            label38.Size = new Size(264, 25);
+            label38.Size = new Size(187, 15);
             label38.TabIndex = 37;
             label38.Text = "____________________________________";
             // 
             // label31
             // 
             label31.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label31.Location = new Point(3, 14);
+            label31.Location = new Point(2, 8);
+            label31.Margin = new Padding(2, 0, 2, 0);
             label31.Name = "label31";
-            label31.Size = new Size(275, 25);
+            label31.Size = new Size(192, 15);
             label31.TabIndex = 37;
             label31.Text = "Semester Grade Calculation";
             label31.TextAlign = ContentAlignment.MiddleCenter;
@@ -751,17 +787,19 @@
             // 
             // examPage
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(935, 698);
+            ClientSize = new Size(654, 419);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel5);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(2);
             Name = "examPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "examPage";
+            Load += examPage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel5.ResumeLayout(false);
@@ -800,16 +838,16 @@
         private Label label15;
         private Label label19;
         private Label label18;
-        private Label label21;
-        private Label label22;
-        private Label label23;
-        private Label label30;
+        private Label txtMidtermScore;
+        private Label lblMidtermRaw;
+        private Label txtMidtermMax;
+        private Label lblTotalRaw;
         private Label label29;
         private Label label28;
         private Label label16;
-        private Label label17;
-        private Label label20;
-        private Label label24;
+        private Label txtFinalsScore;
+        private Label lblFinalsRaw;
+        private Label txtFinalsMax;
         private Label label25;
         private Label label26;
         private Label label27;
@@ -817,29 +855,29 @@
         private Label label31;
         private Label label36;
         private Label label32;
-        private Label label33;
+        private Label txtAttendanceMidterm;
         private Label label35;
-        private Label label34;
+        private Label lblaptitudeWeightedMidterm;
         private Label label39;
-        private Label label37;
+        private Label lblExamWeightedMidterm;
         private Label label38;
         private Panel panel4;
-        private Label label41;
+        private Label lblMidtermGrade;
         private Label label40;
         private Panel panel7;
         private Label label52;
         private Panel panel6;
         private Label label42;
-        private Label label43;
+        private Label lblFinalsGrade;
         private Label label44;
         private Label label45;
-        private Label label46;
+        private Label lblaptitudeWeightedFinals;
         private Label label47;
-        private Label label48;
-        private Label label49;
+        private Label lblExamWeightedFinals;
+        private Label txtAttendanceFinals;
         private Label label50;
         private Label label51;
-        private Label label53;
+        private Label lblOverallGrade;
         private CircularProgressBar circularProgressBar1;
     }
 }
