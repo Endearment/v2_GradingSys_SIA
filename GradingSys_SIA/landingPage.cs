@@ -28,9 +28,6 @@ namespace GradingSys_SIA
             this.CadetId = cadetId;
         }
 
-
-
-
         private void pictureBox2_Click(object sender, EventArgs e)
         {
 

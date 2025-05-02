@@ -1,12 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GradingSys_SIA
@@ -16,9 +9,11 @@ namespace GradingSys_SIA
         private double aptitudePoints = 0.0;
         private double totalMidtermDays;
         private double totalFinalsDays;
-        private double daysAbsent;
+        private double daysAbsentMidterm;
+        private double daysAbsentFinals;
         private readonly DbConnection db;
         private string studentId;
+
         public examPage(string studentId)
         {
             this.studentId = studentId;
@@ -26,43 +21,11 @@ namespace GradingSys_SIA
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label31_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label33_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void examPage_Load(object sender, EventArgs e)
         {
-            CalculateExamGrades();
             LoadExamScoresFromDatabase();
             LoadAttendanceData();
             LoadAptitudeData();
-
         }
 
         private void CalculateExamGrades()
@@ -81,8 +44,8 @@ namespace GradingSys_SIA
                 double midtermExamWeighted = midtermExamRaw * 0.4;
                 double finalsExamWeighted = finalsExamRaw * 0.4;
 
-                double attendanceMidtermRaw = ((totalMidtermDays - daysAbsent) / totalMidtermDays) * 100;
-                double attendanceFinalsRaw = ((totalFinalsDays - daysAbsent) / totalFinalsDays) * 100;
+                double attendanceMidtermRaw = totalMidtermDays > 0 ? ((totalMidtermDays - daysAbsentMidterm) / totalMidtermDays) * 100 : 0;
+                double attendanceFinalsRaw = totalFinalsDays > 0 ? ((totalFinalsDays - daysAbsentFinals) / totalFinalsDays) * 100 : 0;
 
                 double midtermAttendanceWeighted = attendanceMidtermRaw * 0.3;
                 double finalsAttendanceWeighted = attendanceFinalsRaw * 0.3;
@@ -92,7 +55,7 @@ namespace GradingSys_SIA
 
                 double midtermGrade = midtermExamWeighted + midtermAttendanceWeighted + aptitudeWeighted;
                 double finalsGrade = finalsExamWeighted + finalsAttendanceWeighted + aptitudeWeighted;
-                double overallGrade = ((midtermGrade) + (finalsGrade)) / 2;
+                double overallGrade = (midtermGrade + finalsGrade) / 2;
 
                 lblMidtermRaw.Text = $"{midtermExamRaw:F2}%";
                 lblFinalsRaw.Text = $"{finalsExamRaw:F2}%";
@@ -109,9 +72,12 @@ namespace GradingSys_SIA
 
                 lblMidtermGrade.Text = $"{midtermGrade:F2}%";
                 lblFinalsGrade.Text = $"{finalsGrade:F2}%";
+                lblMidtermGrade2.Text = $"{midtermGrade:F2}%";
+                lblFinalsGrade2.Text = $"{finalsGrade:F2}%";
                 lblOverallGrade.Text = $"{overallGrade:F2}%";
 
-
+                circularProgressBar3.Value = (int)Math.Round(overallGrade);
+                circularProgressBar3.Text = $"{overallGrade:F2}%";
             }
             catch
             {
@@ -125,6 +91,10 @@ namespace GradingSys_SIA
                 lblMidtermGrade.Text = "--";
                 lblFinalsGrade.Text = "--";
                 lblOverallGrade.Text = "--";
+                lblMidtermGrade2.Text = "--";
+                lblFinalsGrade2.Text = "--";
+                circularProgressBar3.Value = 0;
+                circularProgressBar3.Text = "--";
             }
         }
 
@@ -156,7 +126,7 @@ namespace GradingSys_SIA
                         }
                         else
                         {
-                            MessageBox.Show("No data found for the selected student.");
+                            MessageBox.Show("No exam data found for the selected student.");
                         }
                     }
                 }
@@ -176,7 +146,7 @@ namespace GradingSys_SIA
             try
             {
                 db.OpenConnection();
-                string query = "SELECT total_days_midterm, total_days_finals, days_absent FROM attendance WHERE student_id = @studentId";
+                string query = "SELECT total_days_midterm, total_days_finals, days_absent_midterm, days_absent_finals FROM attendance WHERE student_id = @studentId";
 
                 using (var cmd = new MySqlCommand(query, db.GetConnection()))
                 {
@@ -186,11 +156,12 @@ namespace GradingSys_SIA
                     {
                         if (reader.Read())
                         {
-                           totalMidtermDays = reader.GetDouble("total_days_midterm");
-                             totalFinalsDays = reader.GetDouble("total_days_finals");
-                             daysAbsent = reader.GetDouble("days_absent");
-                           
-                             CalculateExamGrades(); 
+                            totalMidtermDays = reader.GetDouble("total_days_midterm");
+                            totalFinalsDays = reader.GetDouble("total_days_finals");
+                            daysAbsentMidterm = reader.GetDouble("days_absent_midterm");
+                            daysAbsentFinals = reader.GetDouble("days_absent_finals");
+
+                            CalculateExamGrades();
                         }
                         else
                         {
@@ -214,20 +185,23 @@ namespace GradingSys_SIA
             try
             {
                 db.OpenConnection();
-                string query = "SELECT Aptitude_Points FROM aptitude WHERE student_id = @studentId"; 
+                string query = "SELECT Aptitude_Points FROM aptitude WHERE student_id = @studentId";
 
                 using (var cmd = new MySqlCommand(query, db.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@studentId", studentId);
 
                     using (var reader = cmd.ExecuteReader())
-                    {                        
-                            if (reader.Read())
-                            {
-                                aptitudePoints = reader.GetDouble("Aptitude_Points");
-
-                                CalculateExamGrades();
-                            }
+                    {
+                        if (reader.Read())
+                        {
+                            aptitudePoints = reader.GetDouble("Aptitude_Points");
+                            CalculateExamGrades();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No aptitude data found for the selected student.");
+                        }
                     }
                 }
             }
@@ -235,10 +209,10 @@ namespace GradingSys_SIA
             {
                 MessageBox.Show("Error loading aptitude data: " + ex.Message);
             }
+            finally
+            {
+                db.CloseConnection();
+            }
         }
-
-
-
-
     }
 }

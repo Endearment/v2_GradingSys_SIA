@@ -29,9 +29,6 @@ namespace GradingSys_SIA
             panel2.MouseUp += new MouseEventHandler(panel2_MouseUp);
 
             loadform(new landingPage(fullName, profileImage, aptitudePoints, studentId));
-            //this.studentId = studentId;
-            //this.aptitudePoints = aptitudePoints;
-
         }
 
         private void panel2_MouseDown(object? sender, MouseEventArgs e)
@@ -53,13 +50,6 @@ namespace GradingSys_SIA
         private void panel2_MouseUp(object? sender, MouseEventArgs e)
         {
             dragging = false;
-        }
-
-        private void MakePictureBoxCircular(PictureBox picBox)
-        {
-            GraphicsPath path = new GraphicsPath();
-            path.AddEllipse(0, 0, picBox.Width, picBox.Height);
-            picBox.Region = new Region(path);
         }
 
         private void Form1_Load(object sender, EventArgs e)
