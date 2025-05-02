@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,13 +13,19 @@ namespace GradingSys_SIA
 {
     public partial class landingPage : Form
     {
+        public string CadetId { get; set; }
         private string fullName;
         private Image profileImage;
-        public landingPage(string fullName, Image profileImage)
+        private int aptitudePoints;
+
+
+        public landingPage(string fullName, Image profileImage, int aptitudePoints, string cadetId)
         {
             InitializeComponent();
             this.fullName = fullName;
             this.profileImage = profileImage;
+            this.aptitudePoints = aptitudePoints;
+            this.CadetId = cadetId;
         }
 
 
@@ -26,7 +33,7 @@ namespace GradingSys_SIA
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            // MakePictureBoxCircular(pictureBox2);
+
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -36,6 +43,7 @@ namespace GradingSys_SIA
 
         private void landingPage_Load(object sender, EventArgs e)
         {
+            UpdateAptitudePointsProgress(CadetId);
             lbl_studName.Text = "Welcome, " + fullName;
 
             if (profileImage != null)
@@ -45,10 +53,29 @@ namespace GradingSys_SIA
             }
             else
             {
-                // Set default image if no profile image exists
                 //pictureBox2.Image = Properties.Resources.DefaultProfilePic;
             }
         }
+
+        private void UpdateAptitudePointsProgress(string cadetId)
+        {
+            string connStr = "server=localhost;user=root;database=cis_db;password=;";
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                conn.Open();
+                string query = "SELECT Aptitude_Points FROM aptitude WHERE Student_ID = @studentId";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@studentId", cadetId);
+                    object result = cmd.ExecuteScalar();
+                    int points = result != DBNull.Value ? Convert.ToInt32(result) : 0;
+
+                    circularProgressBar1.Value = points;
+                    circularProgressBar1.Text = points.ToString();
+                }
+            }
+        }
+
     }
 }
 

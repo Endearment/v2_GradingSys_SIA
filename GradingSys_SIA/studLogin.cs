@@ -60,10 +60,11 @@ namespace GradingSys_SIA
                     db.OpenConnection();
                     MySqlConnection connection = db.GetConnection();
 
-                    string query = "SELECT first_name, middle_name, last_name, profile_picture FROM cadet_info WHERE cadet_id = @cadetId";
+                    string query = "SELECT c.first_name, c.middle_name, c.last_name, c.profile_picture, a.aptitude_points\r\nFROM cadet_info c\r\nLEFT JOIN aptitude a ON c.cadet_id = a.student_id\r\nWHERE c.cadet_id = @cadetId\r\n";
 
                     string fullName = null;
                     Image profileImage = null;
+                    int aptitudePoints = 0;
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -86,6 +87,11 @@ namespace GradingSys_SIA
                                     }
                                 }
 
+                                if (reader["aptitude_points"] != DBNull.Value)
+                                {
+                                    aptitudePoints = Convert.ToInt32(reader["aptitude_points"]);
+                                }
+
                                 fullName = $"{firstName} {middleName} {lastName}";
                             }
                         }
@@ -95,7 +101,7 @@ namespace GradingSys_SIA
 
                     if (fullName != null)
                     {
-                        sideBarPanel sideBar = new sideBarPanel(fullName, profileImage, cadetId);
+                        sideBarPanel sideBar = new sideBarPanel(fullName, profileImage, cadetId, aptitudePoints);
                         sideBar.Show();
                         this.Hide();
                     }
