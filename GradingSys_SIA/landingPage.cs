@@ -40,7 +40,7 @@ namespace GradingSys_SIA
 
         private void landingPage_Load(object sender, EventArgs e)
         {
-            UpdateAptitudePointsProgress(CadetId);
+            UpdateLandPageProgress(CadetId);
             lbl_studName.Text = "Welcome, " + fullName;
 
             if (profileImage != null)
@@ -54,25 +54,39 @@ namespace GradingSys_SIA
             }
         }
 
-        private void UpdateAptitudePointsProgress(string cadetId)
+        private void UpdateLandPageProgress(string cadetId)
         {
             string connStr = "server=localhost;user=root;database=cis_db;password=;";
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
-                string query = "SELECT Aptitude_Points FROM aptitude WHERE Student_ID = @studentId";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+
+                string aptitudeQuery = "SELECT Aptitude_Points FROM aptitude WHERE Student_ID = @studentId";
+                using (MySqlCommand aptitudeCmd = new MySqlCommand(aptitudeQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@studentId", cadetId);
-                    object result = cmd.ExecuteScalar();
+                    aptitudeCmd.Parameters.AddWithValue("@studentId", cadetId);
+                    object result = aptitudeCmd.ExecuteScalar();
                     int points = result != DBNull.Value ? Convert.ToInt32(result) : 0;
 
                     circularProgressBar1.Value = points;
                     circularProgressBar1.Text = points.ToString();
                 }
+
+                string gradeQuery = "SELECT Final_Grade FROM grade_management WHERE student_id = @studentId";
+                using (MySqlCommand gradeCmd = new MySqlCommand(gradeQuery, conn))
+                {
+                    gradeCmd.Parameters.AddWithValue("@studentId", cadetId);
+                    object gradeResult = gradeCmd.ExecuteScalar();
+                    double finalGrade = gradeResult != DBNull.Value ? Convert.ToDouble(gradeResult) : 0;
+
+                    circularProgressBar3.Value = (int)Math.Round(finalGrade);
+                    circularProgressBar3.Text = $"{finalGrade:F2}%";
+                }
             }
         }
 
     }
+
 }
+
 

@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace GradingSys_SIA
 {
+
     public class DbConnection
     {
         private readonly string connectionString;
@@ -17,6 +18,10 @@ namespace GradingSys_SIA
         {
             connectionString = $"server=localhost;user id=root;password=;database={databaseName};";
             connection = new MySqlConnection(connectionString);
+        }
+        public string ConnectionString
+        {
+            get { return connectionString; }
         }
 
         public MySqlConnection GetConnection()

@@ -251,8 +251,8 @@
             label3.Name = "label3";
             label3.Size = new Size(309, 38);
             label3.TabIndex = 4;
-            label3.Text = "Exam Grade Summary";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
+            label3.Text = "GRADE SUMMARY";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
@@ -286,7 +286,7 @@
             // 
             lblTotalRaw.AutoSize = true;
             lblTotalRaw.BackColor = Color.Gainsboro;
-            lblTotalRaw.Location = new Point(215, 478);
+            lblTotalRaw.Location = new Point(215, 490);
             lblTotalRaw.Name = "lblTotalRaw";
             lblTotalRaw.Size = new Size(52, 25);
             lblTotalRaw.TabIndex = 36;
@@ -299,7 +299,7 @@
             label29.Name = "label29";
             label29.Size = new Size(199, 58);
             label29.TabIndex = 35;
-            label29.Text = "Total Raw Percentage:  ";
+            label29.Text = "Total Weighted Percentage:  ";
             // 
             // label28
             // 
@@ -435,7 +435,7 @@
             // 
             // label15
             // 
-            label15.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label15.Location = new Point(3, 262);
             label15.Name = "label15";
             label15.Size = new Size(286, 27);
@@ -454,7 +454,7 @@
             // 
             // label6
             // 
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(3, 67);
             label6.Name = "label6";
             label6.Size = new Size(287, 27);
@@ -469,8 +469,8 @@
             label4.Name = "label4";
             label4.Size = new Size(281, 38);
             label4.TabIndex = 18;
-            label4.Text = "Exam Grade";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
+            label4.Text = "EXAM GRADE";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel3
             // 
@@ -522,7 +522,7 @@
             // 
             // label44
             // 
-            label44.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label44.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label44.Location = new Point(-6, 0);
             label44.Name = "label44";
             label44.Size = new Size(274, 27);
@@ -635,7 +635,7 @@
             // 
             // label39
             // 
-            label39.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label39.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label39.Location = new Point(-6, 0);
             label39.Name = "label39";
             label39.Size = new Size(274, 27);
