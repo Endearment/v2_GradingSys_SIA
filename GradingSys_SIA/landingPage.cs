@@ -17,6 +17,8 @@ namespace GradingSys_SIA
         private string fullName;
         private Image profileImage;
         private int aptitudePoints;
+        private int targetAptitude = 0;
+        private int targetFinalGrade = 0;
 
 
         public landingPage(string fullName, Image profileImage, int aptitudePoints, string cadetId)
@@ -84,9 +86,7 @@ namespace GradingSys_SIA
                 }
             }
         }
-
     }
-
 }
 
 

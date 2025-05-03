@@ -170,7 +170,7 @@
             // 
             label5.AutoSize = true;
             label5.BackColor = SystemColors.Window;
-            label5.Location = new Point(246, 93);
+            label5.Location = new Point(225, 93);
             label5.Name = "label5";
             label5.Size = new Size(42, 25);
             label5.TabIndex = 5;

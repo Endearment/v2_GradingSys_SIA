@@ -100,11 +100,11 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 53);
+            label2.Location = new Point(24, 53);
             label2.Name = "label2";
-            label2.Size = new Size(402, 28);
+            label2.Size = new Size(359, 28);
             label2.TabIndex = 1;
-            label2.Text = "You did your best! Here are your exam result.";
+            label2.Text = "You did your best! Here are your results.";
             // 
             // label1
             // 
@@ -113,9 +113,9 @@
             label1.ForeColor = SystemColors.ControlText;
             label1.Location = new Point(14, 8);
             label1.Name = "label1";
-            label1.Size = new Size(306, 45);
+            label1.Size = new Size(470, 45);
             label1.TabIndex = 0;
-            label1.Text = "Examination Result";
+            label1.Text = "Grade and Examination Result";
             // 
             // panel1
             // 
