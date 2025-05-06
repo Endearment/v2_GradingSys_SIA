@@ -58,7 +58,7 @@ namespace GradingSys_SIA
 
         private void UpdateLandPageProgress(string cadetId)
         {
-            string connStr = "server=localhost;user=root;database=cis_db;password=;";
+            string connStr = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user=admin;database=cis_db;password=05152025CIASIA-admin; port=3306";
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();

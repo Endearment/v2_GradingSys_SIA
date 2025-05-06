@@ -16,7 +16,7 @@ namespace GradingSys_SIA
 
         public DbConnection(string databaseName = "cis_db")
         {
-            connectionString = $"server=localhost;user id=root;password=;database={databaseName};";
+            connectionString = $"server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com; user id=admin; password=05152025CIASIA-admin; database={databaseName};port=3306";
             connection = new MySqlConnection(connectionString);
         }
         public string ConnectionString

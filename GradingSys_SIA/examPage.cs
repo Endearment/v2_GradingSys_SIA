@@ -188,7 +188,7 @@
 
         private void SaveOrUpdateFinalGrade(double overallGrade)
         {
-            string connectionString = "server=localhost;user id=root;password=;database=cis_db;";
+            string connectionString = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user id=admin;password=05152025CIASIA-admin;database=cis_db;port = 3306";
 
             using (var conn = new MySqlConnection(connectionString))
             {
