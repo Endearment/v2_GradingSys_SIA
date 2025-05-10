@@ -56,6 +56,13 @@ namespace GradingSys_SIA
             }
         }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+         
+            UpdateNotifier.OnGradeDataUpdated -= () => UpdateLandPageProgress(CadetId);
+            base.OnFormClosed(e);
+        }
+
         private void UpdateLandPageProgress(string cadetId)
         {
             string connStr = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user=admin;database=cis_db;password=05152025CIASIA-admin; port=3306";

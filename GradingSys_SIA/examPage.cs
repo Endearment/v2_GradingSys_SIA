@@ -13,8 +13,11 @@
             private double daysAbsentFinals;
             private readonly DbConnection db;
             private string studentId;
+            private bool isExamLoaded = false;
+            private bool isAttendanceLoaded = false;
+            private bool isAptitudeLoaded = false;
 
-            public examPage(string studentId)
+        public examPage(string studentId)
             {
                 this.studentId = studentId;
                 db = new DbConnection();
@@ -25,8 +28,18 @@
             {
                 LoadExamScoresFromDatabase();
                 LoadAttendanceData();
-                LoadAptitudeData();
+            LoadAptitudeData();
+
+                ExecuteUpdateFinalGradeProcedure();
+        }
+
+        private void TryExecuteStoredProcedure()
+        {
+            if (isExamLoaded && isAttendanceLoaded && isAptitudeLoaded)
+            {
+                ExecuteUpdateFinalGradeProcedure();
             }
+        }
 
         private void CalculateExamGrades()
         {
@@ -79,7 +92,7 @@
                 circularProgressBar3.Value = (int)Math.Round(overallGrade);
                 circularProgressBar3.Text = $"{overallGrade:F2}%";
 
-                SaveOrUpdateFinalGrade(overallGrade);
+                
 
                
             }
@@ -105,49 +118,51 @@
 
 
         private void LoadExamScoresFromDatabase()
+        {
+            try
             {
-                try
+                db.OpenConnection();
+                string query = "SELECT midterm_exam_score, finals_exam_score, Max_Score FROM examination WHERE student_id = @studentId LIMIT 1";
+
+                using (var cmd = new MySqlCommand(query, db.GetConnection()))
                 {
-                    db.OpenConnection();
-                    string query = "SELECT midterm_exam_score, finals_exam_score, Max_Score FROM examination WHERE student_id = @studentId LIMIT 1";
+                    cmd.Parameters.AddWithValue("@studentId", studentId);
 
-                    using (var cmd = new MySqlCommand(query, db.GetConnection()))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@studentId", studentId);
-
-                        using (var reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                double midtermScore = reader.GetDouble("midterm_exam_score");
-                                double finalsScore = reader.GetDouble("finals_exam_score");
-                                double maxScore = reader.GetDouble("Max_Score");
+                            double midtermScore = reader.GetDouble("midterm_exam_score");
+                            double finalsScore = reader.GetDouble("finals_exam_score");
+                            double maxScore = reader.GetDouble("Max_Score");
 
-                                txtMidtermScore.Text = midtermScore.ToString();
-                                txtMidtermMax.Text = maxScore.ToString();
-                                txtFinalsScore.Text = finalsScore.ToString();
-                                txtFinalsMax.Text = maxScore.ToString();
+                            txtMidtermScore.Text = midtermScore.ToString();
+                            txtMidtermMax.Text = maxScore.ToString();
+                            txtFinalsScore.Text = finalsScore.ToString();
+                            txtFinalsMax.Text = maxScore.ToString();
 
-                                CalculateExamGrades();
-                            }
-                            else
-                            {
-                                MessageBox.Show("No exam data found for the selected student.");
-                            }
+                            isExamLoaded = true;
+                            TryExecuteStoredProcedure();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No exam data found for the selected student.");
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading exam data: " + ex.Message);
-                }
-                finally
-                {
-                    db.CloseConnection();
-                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading exam data: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
 
-            private void LoadAttendanceData()
+
+        private void LoadAttendanceData()
             {
                 try
                 {
@@ -167,8 +182,10 @@
                                 daysAbsentMidterm = reader.GetDouble("days_absent_midterm");
                                 daysAbsentFinals = reader.GetDouble("days_absent_finals");
 
-                                CalculateExamGrades();
-                            }
+                                
+                            isAttendanceLoaded = true;
+                            TryExecuteStoredProcedure();
+                        }
                             else
                             {
                                 MessageBox.Show("No attendance data found for the selected student.");
@@ -186,9 +203,9 @@
                 }
             }
 
-        private void SaveOrUpdateFinalGrade(double overallGrade)
+        private void SaveOrUpdateFinalGradeFromReader(MySqlDataReader reader)
         {
-            string connectionString = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user id=admin;password=05152025CIASIA-admin;database=cis_db;port = 3306";
+            string connectionString = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user id=admin;password=05152025CIASIA-admin;database=cis_db;port=3306";
 
             using (var conn = new MySqlConnection(connectionString))
             {
@@ -202,70 +219,148 @@
                         checkCmd.Parameters.AddWithValue("@studentId", studentId);
                         int count = Convert.ToInt32(checkCmd.ExecuteScalar());
 
+                        string sql;
                         if (count > 0)
                         {
-                            string updateQuery = "UPDATE grade_management SET Final_Grade = @finalGrade WHERE student_id = @studentId";
-                            using (var updateCmd = new MySqlCommand(updateQuery, conn))
-                            {
-                                updateCmd.Parameters.AddWithValue("@finalGrade", overallGrade);
-                                updateCmd.Parameters.AddWithValue("@studentId", studentId);
-                                updateCmd.ExecuteNonQuery();
-                            }
+                            sql = @"UPDATE grade_management SET 
+                               midterm_exam = @midterm_exam,
+                               finals_exam = @finals_exam,
+                               midterm_attendance_grade = @midterm_attendance,
+                               finals_attendance_grade = @finals_attendance,
+                               midterm_aptitude_grade = @midterm_aptitude_grade,
+                               finals_aptitude_grade = @finals_aptitude_grade,
+                               Final_Grade = @final_grade
+                           WHERE student_id = @studentId";
                         }
                         else
                         {
-                            string insertQuery = "INSERT INTO grade_management (student_id, Final_Grade) VALUES (@studentId, @finalGrade)";
-                            using (var insertCmd = new MySqlCommand(insertQuery, conn))
-                            {
-                                insertCmd.Parameters.AddWithValue("@studentId", studentId);
-                                insertCmd.Parameters.AddWithValue("@finalGrade", overallGrade);
-                                insertCmd.ExecuteNonQuery();
-                            }
+                            sql = @"INSERT INTO grade_management 
+                               (student_id, midterm_exam, finals_exam, midterm_attendance_grade, finals_attendance_grade, midterm_aptitude_grade, finals_aptitude_grade, Final_Grade)
+                            VALUES 
+                               (@studentId, @midterm_exam, @finals_exam, @midterm_attendance, @finals_attendance, @midterm_aptitude_grade, @finals_aptitude_grade, @final_grade)";
+                        }
+
+                        using (var cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@studentId", studentId);
+                            cmd.Parameters.AddWithValue("@midterm_exam", reader.GetDouble("midterm_exam_weighted"));
+                            cmd.Parameters.AddWithValue("@finals_exam", reader.GetDouble("finals_exam_weighted"));
+                            cmd.Parameters.AddWithValue("@midterm_attendance", reader.GetDouble("midterm_attendance_weighted"));
+                            cmd.Parameters.AddWithValue("@finals_attendance", reader.GetDouble("finals_attendance_weighted"));
+                            cmd.Parameters.AddWithValue("@midterm_aptitude_grade", reader.GetDouble("midterm_aptitude_weighted"));
+                            cmd.Parameters.AddWithValue("@finals_aptitude_grade", reader.GetDouble("finals_aptitude_weighted"));
+                            cmd.Parameters.AddWithValue("@final_grade", reader.GetDouble("final_grade"));
+
+                            cmd.ExecuteNonQuery();
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error inserting/updating final grade: " + ex.Message);
+                    MessageBox.Show("Error saving grade details: " + ex.Message);
                 }
             }
         }
 
 
 
+
         private void LoadAptitudeData()
+        {
+            try
+            {
+                db.OpenConnection();
+                string query = "SELECT Aptitude_Points FROM aptitude WHERE student_id = @studentId";
+
+                using (var cmd = new MySqlCommand(query, db.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@studentId", studentId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            aptitudePoints = reader.GetDouble("Aptitude_Points");
+                            
+                            isAptitudeLoaded = true;
+                            TryExecuteStoredProcedure();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No aptitude data found for the selected student.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading aptitude data: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        private void ExecuteUpdateFinalGradeProcedure()
+        {
+            string connectionString = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user id=admin;password=05152025CIASIA-admin;database=cis_db;port=3306";
+
+            using (var conn = new MySqlConnection(connectionString))
             {
                 try
                 {
-                    db.OpenConnection();
-                    string query = "SELECT Aptitude_Points FROM aptitude WHERE student_id = @studentId";
-
-                    using (var cmd = new MySqlCommand(query, db.GetConnection()))
+                    conn.Open();
+                    using (var cmd = new MySqlCommand("UpdateFinalGrade", conn))
                     {
-                        cmd.Parameters.AddWithValue("@studentId", studentId);
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@sid", studentId);
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                aptitudePoints = reader.GetDouble("Aptitude_Points");
-                                CalculateExamGrades();
-                            }
-                            else
-                            {
-                                MessageBox.Show("No aptitude data found for the selected student.");
+                                double finalGrade = reader.GetDouble("final_grade");
+
+                                lblMidtermRaw.Text = $"{reader.GetDouble("midterm_raw_percentage"):F2}%";
+                                lblFinalsRaw.Text = $"{reader.GetDouble("finals_raw_percentage"):F2}%";
+                                lblTotalRaw.Text = $"{reader.GetDouble("total_raw_percentage"):F2}%";
+
+                                lblExamWeightedMidterm.Text = $"{reader.GetDouble("midterm_exam_weighted"):F2}%";
+                                lblExamWeightedFinals.Text = $"{reader.GetDouble("finals_exam_weighted"):F2}%";
+
+                                txtAttendanceMidterm.Text = $"{reader.GetDouble("midterm_attendance_weighted"):F2}%";
+                                txtAttendanceFinals.Text = $"{reader.GetDouble("finals_attendance_weighted"):F2}%";
+
+                                lblaptitudeWeightedMidterm.Text = $"{reader.GetDouble("midterm_aptitude_weighted"):F2}%";
+                                lblaptitudeWeightedFinals.Text = $"{reader.GetDouble("finals_aptitude_weighted"):F2}%";
+
+                                lblMidtermGrade.Text = $"{reader.GetDouble("midterm_grade"):F2}%";
+                                lblFinalsGrade.Text = $"{reader.GetDouble("finals_grade"):F2}%";
+                                lblMidtermGrade2.Text = $"{reader.GetDouble("midterm_grade"):F2}%";
+                                lblFinalsGrade2.Text = reader.GetDouble("finals_exam_weighted") > 0 ? $"{reader.GetDouble("finals_grade"):F2}%" : "";
+
+                                lblOverallGrade.Text = $"{finalGrade:F2}%";
+                                circularProgressBar3.Value = (int)Math.Round(finalGrade);
+                                circularProgressBar3.Text = $"{finalGrade:F2}%";
+
+                                SaveOrUpdateFinalGradeFromReader(reader);
+                                UpdateNotifier.RaiseGradeDataUpdated();
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error loading aptitude data: " + ex.Message);
-                }
-                finally
-                {
-                    db.CloseConnection();
+                    MessageBox.Show("Failed to execute grading procedure: " + ex.Message);
                 }
             }
         }
+
+
+
     }
+
+}
+
+    

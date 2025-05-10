@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -27,6 +28,8 @@ namespace GradingSys_SIA
             panel2.MouseDown += new MouseEventHandler(panel2_MouseDown);
             panel2.MouseMove += new MouseEventHandler(panel2_MouseMove);
             panel2.MouseUp += new MouseEventHandler(panel2_MouseUp);
+
+            ExecuteUpdateFinalGradeProcedure(studentId);
 
             loadform(new landingPage(fullName, profileImage, aptitudePoints, studentId));
         }
@@ -128,6 +131,22 @@ namespace GradingSys_SIA
         private void panel6_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ExecuteUpdateFinalGradeProcedure(string studentId)
+        {
+            string connectionString = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user id=admin;password=05152025CIASIA-admin;database=cis_db;port=3306";
+
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand("UpdateFinalGrade", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@sid", studentId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
