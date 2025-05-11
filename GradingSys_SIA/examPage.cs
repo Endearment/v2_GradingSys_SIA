@@ -212,46 +212,61 @@
                 try
                 {
                     conn.Open();
+                    MessageBox.Show("Connection opened successfully.");
 
-                    string checkQuery = "SELECT COUNT(*) FROM grade_management WHERE student_id = @studentId";
+                    string checkQuery = "SELECT midterm_aptitude_grade FROM grade_management WHERE student_id = @studentId";
                     using (var checkCmd = new MySqlCommand(checkQuery, conn))
                     {
                         checkCmd.Parameters.AddWithValue("@studentId", studentId);
-                        int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        var result = checkCmd.ExecuteScalar();
 
-                        string sql;
-                        if (count > 0)
+                        MessageBox.Show($"Existing midterm aptitude grade: {result}");
+
+                        if (result != null && result != DBNull.Value && Convert.ToDouble(result) > 0)
                         {
-                            sql = @"UPDATE grade_management SET 
-                               midterm_exam = @midterm_exam,
-                               finals_exam = @finals_exam,
-                               midterm_attendance_grade = @midterm_attendance,
-                               finals_attendance_grade = @finals_attendance,
-                               midterm_aptitude_grade = @midterm_aptitude_grade,
-                               finals_aptitude_grade = @finals_aptitude_grade,
-                               Final_Grade = @final_grade
-                           WHERE student_id = @studentId";
+                            // Grade is locked, no update
+                            MessageBox.Show("Grade is locked. Skipping update.");
+                            return;
+                        }
+                    }
+
+                    string sql = @"INSERT INTO grade_management (student_id, midterm_exam, finals_exam, midterm_attendance_grade, 
+                finals_attendance_grade, midterm_aptitude_grade, finals_aptitude_grade, Final_Grade)
+               VALUES (@studentId, @midterm_exam, @finals_exam, @midterm_attendance, @finals_attendance, 
+                       @midterm_aptitude_grade, @finals_aptitude_grade, @final_grade)
+               ON DUPLICATE KEY UPDATE 
+                    midterm_exam = VALUES(midterm_exam),
+                    finals_exam = VALUES(finals_exam),
+                    midterm_attendance_grade = VALUES(midterm_attendance_grade),
+                    finals_attendance_grade = VALUES(finals_attendance_grade),
+                    midterm_aptitude_grade = CASE WHEN midterm_aptitude_grade > 0 THEN midterm_aptitude_grade ELSE VALUES(midterm_aptitude_grade) END,
+                    finals_aptitude_grade = CASE WHEN finals_aptitude_grade > 0 THEN finals_aptitude_grade ELSE VALUES(finals_aptitude_grade) END,
+                    Final_Grade = VALUES(Final_Grade)";
+
+                    MessageBox.Show($"Executing query: {sql}");
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@studentId", studentId);
+                        cmd.Parameters.AddWithValue("@midterm_exam", reader.GetDouble("midterm_exam_weighted"));
+                        cmd.Parameters.AddWithValue("@finals_exam", reader.GetDouble("finals_exam_weighted"));
+                        cmd.Parameters.AddWithValue("@midterm_attendance", reader.GetDouble("midterm_attendance_weighted"));
+                        cmd.Parameters.AddWithValue("@finals_attendance", reader.GetDouble("finals_attendance_weighted"));
+                        cmd.Parameters.AddWithValue("@midterm_aptitude_grade", reader.GetDouble("midterm_aptitude_weighted"));
+                        cmd.Parameters.AddWithValue("@finals_aptitude_grade", reader.GetDouble("finals_aptitude_weighted"));
+                        cmd.Parameters.AddWithValue("@final_grade", reader.GetDouble("final_grade"));
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        MessageBox.Show($"Rows affected: {rowsAffected}");
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Grade saved/updated successfully.");
                         }
                         else
                         {
-                            sql = @"INSERT INTO grade_management 
-                               (student_id, midterm_exam, finals_exam, midterm_attendance_grade, finals_attendance_grade, midterm_aptitude_grade, finals_aptitude_grade, Final_Grade)
-                            VALUES 
-                               (@studentId, @midterm_exam, @finals_exam, @midterm_attendance, @finals_attendance, @midterm_aptitude_grade, @finals_aptitude_grade, @final_grade)";
-                        }
-
-                        using (var cmd = new MySqlCommand(sql, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@studentId", studentId);
-                            cmd.Parameters.AddWithValue("@midterm_exam", reader.GetDouble("midterm_exam_weighted"));
-                            cmd.Parameters.AddWithValue("@finals_exam", reader.GetDouble("finals_exam_weighted"));
-                            cmd.Parameters.AddWithValue("@midterm_attendance", reader.GetDouble("midterm_attendance_weighted"));
-                            cmd.Parameters.AddWithValue("@finals_attendance", reader.GetDouble("finals_attendance_weighted"));
-                            cmd.Parameters.AddWithValue("@midterm_aptitude_grade", reader.GetDouble("midterm_aptitude_weighted"));
-                            cmd.Parameters.AddWithValue("@finals_aptitude_grade", reader.GetDouble("finals_aptitude_weighted"));
-                            cmd.Parameters.AddWithValue("@final_grade", reader.GetDouble("final_grade"));
-
-                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("No rows were affected. Please check the data.");
                         }
                     }
                 }
@@ -356,5 +371,6 @@
                 }
             }
         }
+
     }
 }

@@ -42,6 +42,7 @@ namespace GradingSys_SIA
 
         private void landingPage_Load(object sender, EventArgs e)
         {
+            CallUpdateFinalGradeProcedure(CadetId);
             UpdateLandPageProgress(CadetId);
             lbl_studName.Text = "Welcome, " + fullName;
 
@@ -90,6 +91,22 @@ namespace GradingSys_SIA
 
                     circularProgressBar3.Value = (int)Math.Round(finalGrade);
                     circularProgressBar3.Text = $"{finalGrade:F2}%";
+                }
+            }
+        }
+
+        private void CallUpdateFinalGradeProcedure(string studentId)
+        {
+            string connStr = "server=database-sia-cis.c7gskq208sgz.ap-southeast-2.rds.amazonaws.com;user=admin;password=05152025CIASIA-admin;database=cis_db;port=3306";
+
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand("UpdateFinalGrade", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@sid", studentId);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
