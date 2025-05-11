@@ -31,6 +31,8 @@
             LoadAptitudeData();
 
                 ExecuteUpdateFinalGradeProcedure();
+            LoadMidtermAptitudeGradeFromDatabase();
+
         }
 
         private void TryExecuteStoredProcedure()
@@ -366,6 +368,44 @@
                 }
             }
         }
+
+        private void LoadMidtermAptitudeGradeFromDatabase()
+        {
+            try
+            {
+                db.OpenConnection();
+                string query = "SELECT midterm_aptitude_grade FROM grade_management WHERE student_id = @studentId";
+
+                using (var cmd = new MySqlCommand(query, db.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@studentId", studentId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            double aptitudeGrade = reader.GetDouble("midterm_aptitude_grade");
+
+                            // Update the appropriate label
+                            lblaptitudeWeightedMidterm.Text = $"{aptitudeGrade:F2}%";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Midterm aptitude grade not found in grade_management table.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading midterm aptitude grade: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
 
     }
 }

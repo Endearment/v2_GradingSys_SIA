@@ -12,12 +12,17 @@ namespace GradingSys_SIA
             InitializeComponent();
             this.studentId = studentId;
             this.Load += aptitudePage_Load;
+           
         }
 
         private void aptitudePage_Load(object sender, EventArgs e)
         {
             LoadAptitudeData();
             LoadStudentDemeritsWithDate();
+            dataGridView1.ScrollBars = ScrollBars.Both;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.Enabled = true;
         }
 
         private void LoadAptitudeData()
@@ -29,14 +34,12 @@ namespace GradingSys_SIA
                 db.OpenConnection();
                 MySqlConnection conn = db.GetConnection();
 
-                // First, check if the student has a record in aptitude
                 string checkQuery = "SELECT COUNT(*) FROM aptitude WHERE Student_ID = @studentId";
                 using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn))
                 {
                     checkCmd.Parameters.AddWithValue("@studentId", studentId);
                     long count = (long)checkCmd.ExecuteScalar();
 
-                    // If no record exists, insert default record
                     if (count == 0)
                     {
                         string insertQuery = "INSERT INTO aptitude (Student_ID, Total_Demerits, aptitude_points) VALUES (@studentId, 0, 100)";
@@ -48,7 +51,6 @@ namespace GradingSys_SIA
                     }
                 }
 
-                // Now load the data as usual
                 string query = @"SELECT Total_Demerits, aptitude_points 
                          FROM aptitude 
                          WHERE Student_ID = @studentId";
@@ -129,9 +131,12 @@ namespace GradingSys_SIA
 
                             foreach (string col in demeritColumns)
                             {
-                                if (int.TryParse(reader[col].ToString(), out int value) && value != 0)
+                                if (int.TryParse(reader[col].ToString(), out int value) && value > 0)
                                 {
-                                    resultTable.Rows.Add(col, date);
+                                    for (int i = 0; i < value; i++)
+                                    {
+                                        resultTable.Rows.Add(col, date);
+                                    }
                                 }
                             }
                         }
@@ -168,7 +173,9 @@ namespace GradingSys_SIA
         private void label5_Click(object sender, EventArgs e) { }
         private void label35_Click(object sender, EventArgs e) { }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+
+
+        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
         {
 
         }
