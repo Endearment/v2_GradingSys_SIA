@@ -15,6 +15,7 @@ namespace GradingSys_SIA
     public partial class studLogin : Form
     {
         private DbConnection db;
+
         public studLogin()
         {
             InitializeComponent();
@@ -43,7 +44,6 @@ namespace GradingSys_SIA
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
@@ -55,16 +55,19 @@ namespace GradingSys_SIA
                     return;
                 }
 
+                string fullName = null;
+                Image profileImage = null;
+                int aptitudePoints = 0;
+
                 try
                 {
                     db.OpenConnection();
                     MySqlConnection connection = db.GetConnection();
 
-                    string query = "SELECT c.first_name, c.middle_name, c.last_name, c.profile_picture, a.aptitude_points\r\nFROM cadet_info c\r\nLEFT JOIN aptitude a ON c.cadet_id = a.student_id\r\nWHERE c.cadet_id = @cadetId\r\n";
-
-                    string fullName = null;
-                    Image profileImage = null;
-                    int aptitudePoints = 0;
+                    string query = @"SELECT c.first_name, c.middle_name, c.last_name, c.profile_picture, a.aptitude_points
+                                     FROM cadet_info c
+                                     LEFT JOIN aptitude a ON c.cadet_id = a.student_id
+                                     WHERE c.cadet_id = @cadetId";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -96,7 +99,26 @@ namespace GradingSys_SIA
                             }
                         }
                     }
+                    db.CloseConnection();
 
+                    db.OpenConnection();
+                    using (MySqlCommand checkCmd = new MySqlCommand("SELECT COUNT(*) FROM aptitude WHERE Student_ID = @cadetId", db.GetConnection()))
+                    {
+                        checkCmd.Parameters.AddWithValue("@cadetId", cadetId);
+                        long count = (long)checkCmd.ExecuteScalar();
+
+                        if (count == 0)
+                        {
+                            string insertQuery = "INSERT INTO aptitude (Student_ID, Total_Demerits, aptitude_points) VALUES (@cadetId, 0, 100)";
+                            using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, db.GetConnection()))
+                            {
+                                insertCmd.Parameters.AddWithValue("@cadetId", cadetId);
+                                insertCmd.ExecuteNonQuery();
+                            }
+
+                            aptitudePoints = 100;
+                        }
+                    }
                     db.CloseConnection();
 
                     if (fullName != null)
@@ -107,8 +129,8 @@ namespace GradingSys_SIA
                     }
                     else
                     {
-                        MessageBox.Show("ID Does not exist. Please try again.", "Login Failed",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("ID does not exist. Please try again.", "Login Failed",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)

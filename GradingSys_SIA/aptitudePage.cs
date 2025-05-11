@@ -29,6 +29,26 @@ namespace GradingSys_SIA
                 db.OpenConnection();
                 MySqlConnection conn = db.GetConnection();
 
+                // First, check if the student has a record in aptitude
+                string checkQuery = "SELECT COUNT(*) FROM aptitude WHERE Student_ID = @studentId";
+                using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@studentId", studentId);
+                    long count = (long)checkCmd.ExecuteScalar();
+
+                    // If no record exists, insert default record
+                    if (count == 0)
+                    {
+                        string insertQuery = "INSERT INTO aptitude (Student_ID, Total_Demerits, aptitude_points) VALUES (@studentId, 0, 100)";
+                        using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn))
+                        {
+                            insertCmd.Parameters.AddWithValue("@studentId", studentId);
+                            insertCmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                // Now load the data as usual
                 string query = @"SELECT Total_Demerits, aptitude_points 
                          FROM aptitude 
                          WHERE Student_ID = @studentId";
@@ -58,6 +78,7 @@ namespace GradingSys_SIA
                 db?.CloseConnection();
             }
         }
+
 
         private void LoadStudentDemeritsWithDate()
         {
