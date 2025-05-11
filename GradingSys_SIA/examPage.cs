@@ -212,7 +212,6 @@
                 try
                 {
                     conn.Open();
-                    MessageBox.Show("Connection opened successfully.");
 
                     string checkQuery = "SELECT midterm_aptitude_grade FROM grade_management WHERE student_id = @studentId";
                     using (var checkCmd = new MySqlCommand(checkQuery, conn))
@@ -220,12 +219,9 @@
                         checkCmd.Parameters.AddWithValue("@studentId", studentId);
                         var result = checkCmd.ExecuteScalar();
 
-                        MessageBox.Show($"Existing midterm aptitude grade: {result}");
 
                         if (result != null && result != DBNull.Value && Convert.ToDouble(result) > 0)
                         {
-                            // Grade is locked, no update
-                            MessageBox.Show("Grade is locked. Skipping update.");
                             return;
                         }
                     }
@@ -258,7 +254,6 @@
 
                         int rowsAffected = cmd.ExecuteNonQuery();
 
-                        MessageBox.Show($"Rows affected: {rowsAffected}");
 
                         if (rowsAffected > 0)
                         {
