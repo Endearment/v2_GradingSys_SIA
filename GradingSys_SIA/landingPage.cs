@@ -59,7 +59,7 @@ namespace GradingSys_SIA
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-         
+
             UpdateNotifier.OnGradeDataUpdated -= () => UpdateLandPageProgress(CadetId);
             base.OnFormClosed(e);
         }
@@ -92,8 +92,40 @@ namespace GradingSys_SIA
                     circularProgressBar3.Value = (int)Math.Round(finalGrade);
                     circularProgressBar3.Text = $"{finalGrade:F2}%";
                 }
+
+                string examQuery = "SELECT Score FROM examination WHERE student_id = @studentId";
+                using (MySqlCommand examCmd = new MySqlCommand(examQuery, conn))
+                {
+                    examCmd.Parameters.AddWithValue("@studentId", cadetId);
+                    object scoreResult = examCmd.ExecuteScalar();
+                    int examScore = scoreResult != DBNull.Value ? Convert.ToInt32(scoreResult) : 0;
+
+                    int scaledScore = examScore * 2;
+                    circularProgressBar4.Value = scaledScore;
+                    circularProgressBar4.Text = $"{scaledScore}%";
+                }
+
+                int currentMonth = DateTime.Now.Month;
+                string attendanceColumn = (currentMonth >= 1 && currentMonth <= 3) ? "midterm_attendance_grade" : "finals_attendance_grade";
+
+                string attendanceQuery = $"SELECT {attendanceColumn} FROM grade_management WHERE student_id = @studentId";
+                using (MySqlCommand attendanceCmd = new MySqlCommand(attendanceQuery, conn))
+                {
+                    attendanceCmd.Parameters.AddWithValue("@studentId", cadetId);
+                    object attendanceResult = attendanceCmd.ExecuteScalar();
+
+                    int rawAttendance = attendanceResult != DBNull.Value ? Convert.ToInt32(attendanceResult) : 0;
+                    int maxAttendance = 30;
+                    int attendancePercentage = (int)Math.Round((rawAttendance / (double)maxAttendance) * 100);
+
+                    circularProgressBar2.Value = attendancePercentage;
+                    circularProgressBar2.Text = $"{attendancePercentage}%";
+                }
+
+
             }
         }
+
 
         private void CallUpdateFinalGradeProcedure(string studentId)
         {
@@ -109,6 +141,11 @@ namespace GradingSys_SIA
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void circularProgressBar1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
